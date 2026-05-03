@@ -11,7 +11,7 @@ export interface ButtonProps {
   autofocus?: boolean;
   disabled?: boolean;
   loading?: boolean;
-  icon?: boolean;
+  icon?: string;
   nativeType?: ButtonNativeType;
 }
 

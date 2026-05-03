@@ -8,6 +8,8 @@
     'is-disabled': disabled,
     'is-loading': loading
   }" :disabled="disabled || loading" :type="nativeType" :autofocus="autofocus">
+    <Icon icon="spinner" spin v-if="loading"></Icon>
+    <Icon :icon="icon!" v-if="icon"></Icon>
     <span>
       <slot></slot>
     </span>
@@ -17,6 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { ButtonInstance, ButtonProps } from './types';
+import Icon from '../Icon/Icon.vue';
 
 defineOptions({
   name: 'VkButton'
