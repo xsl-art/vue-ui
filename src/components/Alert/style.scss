@@ -1,0 +1,95 @@
+.vk-alert{
+  --vk-alert-font-weight: var(--vk-font-weight-primary);
+  --vk-alert-border-color: var(--vk-border-color);
+  --vk-alert-bg-color: var(--vk-fill-color-blank);
+  --vk-alert-text-color: var(--vk-text-color-regular);
+  --vk-alert-outline-color: var(--vk-color-primary-light-5);
+  --vk-alert-font-size:var(--vk-font-size-base);
+  --vk-alert-border-radius:var(--vk-border-radius-base);
+}
+
+.vk-alert{
+  width: 300px;
+  display: flex;
+  position: relative;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--vk-alert-border-color);
+  background-color: var(--vk-alert-bg-color);
+  color: var(--vk-alert-text-color);
+  cursor: pointer;
+  font-weight: var(--vk-alert-font-weight);
+  font-size: var(--vk-alert-font-size);
+  outline: var(--vk-alert-outline-color);
+  border-radius: var(--vk-alert-border-radius);
+
+  &.is-closable {
+    padding-right: 36px;
+  }
+
+  &.is-showIcon{
+    .icon{ 
+      color: var(--vk-alert-text-color);
+      margin-right: 8px;
+    }
+  }
+
+  &.is-center{
+    justify-content: center;
+    text-align: center;
+
+    .vk-alert__content {
+      align-items: center;
+    }
+  }
+
+  @each $val in (primary, success, warning, danger, info) {
+    &.vk-alert--light.vk-alert--#{$val} {
+      --vk-alert-bg-color: var(--vk-color-#{$val}-light-8);
+      --vk-alert-text-color: var(--vk-color-#{$val});
+      --vk-alert-border-color: var(--vk-color-#{$val}-light-7); // 建议边框也变色
+    }
+
+    &.vk-alert--dark.vk-alert--#{$val} {
+      --vk-alert-bg-color: var(--vk-color-#{$val});
+      --vk-alert-text-color: #ffffff; 
+      --vk-alert-border-color: var(--vk-color-#{$val});
+    }
+  }
+}
+
+.vk-alert__content{
+  display: flex;
+  flex-direction: column;
+}
+
+.vk-alert__clear {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.vk-alert-fade {
+  &-enter-active,
+  &-leave-active {
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  &-enter-from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

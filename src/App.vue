@@ -4,6 +4,7 @@ import Button from './components/Button/Button.vue';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
+import Alert from './components/Alert/Alert.vue';
 
 //初始激活项
 const openedValue = ref(["a"]);
@@ -33,4 +34,12 @@ const openedValue = ref(["a"]);
       <div>123范德萨案件发生开发</div>
     </CollapseItem>
   </Collapse>
+
+  <br />
+
+  <Alert title="123" content="fjsdfhl" type="primary" effect="light" center></Alert>
+  <Alert title="123" content="fjsdfhl" type="success" effect="light"></Alert>
+  <Alert title="123" content="fjsdfhl" type="warning" effect="dark"></Alert>
+  <Alert title="123" content="fjsdfhl" type="danger" effect="dark"></Alert>
+  <Alert title="123" content="fjsdfhl" type="info" effect="light"></Alert>
 </template>
