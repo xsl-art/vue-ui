@@ -1,4 +1,4 @@
-.vk-collpase{
+.vk-collapse{
   --vk-collapse-border-color: var(--vk-border-color-light);
   --vk-collapse-header-height: 48px;
   --vk-collapse-header-bg-color: var(--vk-fill-color-blank);
@@ -51,7 +51,7 @@
   font-size: var(--vk-collapse-content-font-size);
   color: var(--vk-collapse-content-text-color);
   border-bottom: 1px solid var(--vk-collapse-border-color);
-  padding: 15px 0;
+  padding-bottom: 15px;
 }
 
 .fade-enter-active,

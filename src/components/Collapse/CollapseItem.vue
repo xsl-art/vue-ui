@@ -1,12 +1,12 @@
 <template>
-  <div class="vk-collapse" :class="{ 'is-disabled': disabled }">
+  <div class="vk-collapse-item" :class="{ 'is-disabled': disabled }">
     <div class="vk-collapse-item__header" :class="{ 'is-disabled': disabled, 'is-active': isActive }"
       @click="handleClick" :id="`item-header-${name}`">
       <slot name="title">{{ title }}</slot>
       <Icon icon="angle-right" class="header-angle"></Icon>
     </div>
     <Transition name="fade" v-on="transationEvents">
-      <div class="vk-collpase-item__wrapper" v-show="isActive">
+      <div class="vk-collapse-item__wrapper" v-show="isActive">
         <div class="vk-collapse-item__content" :id="`item-header-${name}`">
           <slot></slot>
         </div>
