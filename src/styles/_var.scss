@@ -1,0 +1,100 @@
+:root {
+  /* colors */
+  --vk-color-white: #ffffff;
+  --vk-color-black: #000000;
+  --vk-color-primary: #409eff;
+  --vk-color-primary-light-3: rgb(121, 187, 255);
+  --vk-color-primary-light-5: rgb(160, 207, 255);
+  --vk-color-primary-light-7: rgb(198, 226, 255);
+  --vk-color-primary-light-8: rgb(217, 236, 255);
+  --vk-color-primary-light-9: rgb(236, 245, 255);
+  --vk-color-primary-dark-2: rgb(51, 126, 204);
+  --vk-color-success: #67c23a;
+  --vk-color-success-light-3: rgb(149, 212, 117);
+  --vk-color-success-light-5: rgb(179, 225, 157);
+  --vk-color-success-light-7: rgb(209, 237, 196);
+  --vk-color-success-light-8: rgb(225, 243, 216);
+  --vk-color-success-light-9: rgb(240, 249, 235);
+  --vk-color-success-dark-2: rgb(82, 155, 46);
+  --vk-color-warning: #e6a23c;
+  --vk-color-warning-light-3: rgb(238, 190, 119);
+  --vk-color-warning-light-5: rgb(243, 209, 158);
+  --vk-color-warning-light-7: rgb(248, 227, 197);
+  --vk-color-warning-light-8: rgb(250, 236, 216);
+  --vk-color-warning-light-9: rgb(253, 246, 236);
+  --vk-color-warning-dark-2: rgb(184, 130, 48);
+  --vk-color-danger: #f56c6c;
+  --vk-color-danger-light-3: rgb(248, 152, 152);
+  --vk-color-danger-light-5: rgb(250, 182, 182);
+  --vk-color-danger-light-7: rgb(252, 211, 211);
+  --vk-color-danger-light-8: rgb(253, 226, 226);
+  --vk-color-danger-light-9: rgb(254, 240, 240);
+  --vk-color-danger-dark-2: rgb(196, 86, 86);
+  --vk-color-error: #f56c6c;
+  --vk-color-error-light-3: rgb(248, 152, 152);
+  --vk-color-error-light-5: rgb(250, 182, 182);
+  --vk-color-error-light-7: rgb(252, 211, 211);
+  --vk-color-error-light-8: rgb(253, 226, 226);
+  --vk-color-error-light-9: rgb(254, 240, 240);
+  --vk-color-error-dark-2: rgb(196, 86, 86);
+  --vk-color-info: #909399;
+  --vk-color-info-light-3: rgb(177, 179, 184);
+  --vk-color-info-light-5: rgb(200, 201, 204);
+  --vk-color-info-light-7: rgb(222, 223, 224);
+  --vk-color-info-light-8: rgb(233, 233, 235);
+  --vk-color-info-light-9: rgb(244, 244, 245);
+  --vk-color-info-dark-2: rgb(115, 118, 122);
+
+  --vk-bg-color: #ffffff;
+  --vk-bg-color-page: #f2f3f5;
+  --vk-bg-color-overlay: #ffffff;
+  --vk-text-color-primary: #303133;
+  --vk-text-color-regular: #606266;
+  --vk-text-color-secondary: #909399;
+  --vk-text-color-placeholder: #a8abb2;
+  --vk-text-color-disabled: #c0c4cc;
+  --vk-border-color: #dcdfe6;
+  --vk-border-color-light: #e4e7ed;
+  --vk-border-color-lighter: #ebeef5;
+  --vk-border-color-extra-light: #f2f6fc;
+  --vk-border-color-dark: #d4d7de;
+  --vk-border-color-darker: #cdd0d6;
+  --vk-fill-color: #f0f2f5;
+  --vk-fill-color-light: #f5f7fa;
+  --vk-fill-color-lighter: #fafafa;
+  --vk-fill-color-extra-light: #fafcff;
+  --vk-fill-color-dark: #ebedf0;
+  --vk-fill-color-darker: #e6e8eb;
+  --vk-fill-color-blank: #ffffff;
+
+  /* border */
+  --vk-border-width: 1px;
+  --vk-border-style: solid;
+  --vk-border-color-hover: var(--vk-text-color-disabled);
+  --vk-border: var(--vk-border-width) var(--vk-border-style) var(--vk-border-color);
+  --vk-border-radius-base: 4px;
+  --vk-border-radius-small: 2px;
+  --vk-border-radius-round: 20px;
+  --vk-border-radius-circle: 100%;
+
+  /*font*/
+  --vk-font-size-extra-large: 20px;
+  --vk-font-size-large: 18px;
+  --vk-font-size-medium: 16px;
+  --vk-font-size-base: 14px;
+  --vk-font-size-small: 13px;
+  --vk-font-size-extra-small: 12px;
+  --vk-font-family:
+    "Hvkvetica Neue", Hvkvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "\5fae\8f6f\96c5\9ed1", Arial, sans-serif;
+  --vk-font-weight-primary: 500;
+
+  /*disabled*/
+  --vk-disabled-bg-color: var(--vk-fill-color-light);
+  --vk-disabled-text-color: var(--vk-text-color-placeholder);
+  --vk-disabled-border-color: var(--vk-border-color-light);
+
+  /*animation*/
+  --vk-transition-duration: 0.3s;
+  --vk-transition-duration-fast: 0.2s;
+}
