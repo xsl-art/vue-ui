@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { h, ref } from 'vue';
+import { h, onMounted, ref } from 'vue';
 import Button from './components/Button/Button.vue';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
@@ -9,6 +9,7 @@ import Tooltip from './components/Tooltip/Tooltip.vue';
 import type { TooltipInstance } from './components/Tooltip/types';
 import Dropdown from './components/Dropdown/Dropdown.vue';
 import type { MenuOption } from './components/Dropdown/types';
+import { createMessage } from './components/Message/methods';
 
 
 //初始激活项
@@ -23,6 +24,11 @@ const menu: MenuOption[] = [
   { label: 'faHardOfHearing', key: 4 },
   { label: h('h4', 'hello peter'), key: 5 }
 ]
+
+onMounted(() => {
+  createMessage({ message: 'dhakfh', duration: 3000, type: 'success' }),
+    createMessage({ message: 'dhakfh', duration: 0, type: 'danger' })
+})
 </script>
 
 <template>
@@ -72,4 +78,6 @@ const menu: MenuOption[] = [
     <template #content>
     </template>
   </Dropdown>
+
+  <br />
 </template>
