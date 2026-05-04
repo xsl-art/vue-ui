@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <Transition name="fade">
-      <div class="vk-tooltip__popper" v-if="isOpen" ref="popperNode">
+      <div class="vk-tooltip__popper" v-if="isOpen" ref="popperNode" v-on="popperEvents">
         <slot name="content">{{ content }}</slot>
         <div id="arrow" data-popper-arrow></div>
       </div>
@@ -13,11 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import type { TooltipProps, TooltipEmits } from './types';
 import { createPopper, type Instance } from '@popperjs/core';
-import useClickOutside from '../../hooks/useClickOutSide';
+import useClickOutside from '../../hooks/useClickOutside';
 import { debounce } from 'lodash';
+
+defineOptions({
+  name: 'VkTooltip'
+})
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   trigger: 'click',
@@ -31,8 +35,9 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 const emits = defineEmits<TooltipEmits>()
 
 const isOpen = ref(false)
-const outerEvents: Record<string, any> = ref({})
-const events: Record<string, any> = ref({})
+const outerEvents: Record<string, any> = reactive({})
+const events: Record<string, any> = reactive({})
+const popperEvents: Record<string, any> = reactive({})
 const popperContainerNode = ref<HTMLElement>()
 const triggrtNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
@@ -88,14 +93,6 @@ const closeFinal = () => {
   closeDebounce()
 }
 
-const togglePopper = () => {
-  if (isOpen.value) {
-    closeFinal()
-  } else {
-    openFinal()
-  }
-}
-
 //判断是否点击外部
 useClickOutside(popperContainerNode, () => {
   if (props.trigger === 'click' && isOpen.value && !props.manual) {
@@ -112,6 +109,9 @@ const clearEvent = () => {
   Object.keys(outerEvents).forEach(key => {
     delete outerEvents[key]
   })
+  Object.keys(popperEvents).forEach(key => {
+    delete popperEvents[key]
+  })
 }
 //事件绑定
 const attachEvent = () => {
@@ -122,9 +122,10 @@ const attachEvent = () => {
   if (props.trigger === 'hover') {
     events['mouseenter'] = openFinal
     outerEvents['mouseleave'] = closeFinal
+    popperEvents['mouseenter'] = openFinal
   } else {
     //click
-    events['click'] = togglePopper
+    events['click'] = openFinal
   }
 }
 
