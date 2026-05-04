@@ -1,0 +1,24 @@
+import { onMounted, onUnmounted } from "vue";
+import type { Ref } from "vue";
+//判断点击元素是否在elementRef内部
+const useClickOutside = (
+  elementRef: Ref<HTMLElement | undefined>,
+  callback: (e: MouseEvent) => void,
+) => {
+  const handler = (e: MouseEvent) => {
+    if (!elementRef.value?.contains(e.target as HTMLElement)) {
+      //在外部则执行回调
+      callback(e);
+    }
+  };
+
+  onMounted(() => {
+    document.addEventListener("click", handler);
+  });
+
+  onUnmounted(() => {
+    document.removeEventListener("click", handler);
+  });
+};
+
+export default useClickOutside;

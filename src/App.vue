@@ -5,15 +5,20 @@ import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
 import Alert from './components/Alert/Alert.vue';
+import Tooltip from './components/Tooltip/Tooltip.vue';
+import type { TooltipInstance } from './components/Tooltip/types';
+
 
 //初始激活项
 const openedValue = ref(["a"]);
+
+const toolTipRef = ref<TooltipInstance>()
 </script>
 
 <template>
-  <Button type="danger" disabled loading>测试Button</Button>
-  <Button round type="primary" icon="face-smile">测试Button2</Button>
-  <Button circle type="success" plain>测试Button2</Button>
+  <Button type="danger" loading>测试Button</Button>
+  <Button round type="primary" icon="face-smile" @click="toolTipRef?.hide">测试Button2</Button>
+  <Button circle type="success" plain @click="toolTipRef?.show">测试Button2</Button>
 
   <br />
   <Icon icon="face-smile" color="pink" size="10x"></Icon>
@@ -42,4 +47,20 @@ const openedValue = ref(["a"]);
   <Alert title="123" content="fjsdfhl" type="warning" effect="dark"></Alert>
   <Alert title="123" content="fjsdfhl" type="danger" effect="dark"></Alert>
   <Alert title="123" content="fjsdfhl" type="info" effect="light"></Alert>
+
+  <br />
+
+  <Tooltip manual ref="toolTipRef">
+    <img src="../src/assets/vue.svg" alt="" class="logo" width="125" height="125">
+    <template #content>
+      <span>你好啊tooltip</span>
+    </template>
+  </Tooltip>
+
+  <Tooltip trigger="hover">
+    <img src="../src/assets/vue.svg" alt="" class="logo" width="125" height="125">
+    <template #content>
+      <span>你好啊tooltip</span>
+    </template>
+  </Tooltip>
 </template>
