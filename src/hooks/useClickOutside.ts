@@ -6,9 +6,11 @@ const useClickOutside = (
   callback: (e: MouseEvent) => void,
 ) => {
   const handler = (e: MouseEvent) => {
-    if (!elementRef.value?.contains(e.target as HTMLElement)) {
-      //在外部则执行回调
-      callback(e);
+    if (elementRef.value && e.target) {
+      if (!elementRef.value?.contains(e.target as HTMLElement)) {
+        //在外部则执行回调
+        callback(e);
+      }
     }
   };
 

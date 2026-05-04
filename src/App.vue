@@ -50,7 +50,7 @@ const toolTipRef = ref<TooltipInstance>()
 
   <br />
 
-  <Tooltip manual ref="toolTipRef">
+  <Tooltip ref="toolTipRef">
     <img src="../src/assets/vue.svg" alt="" class="logo" width="125" height="125">
     <template #content>
       <span>你好啊tooltip</span>

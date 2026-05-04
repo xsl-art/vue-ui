@@ -13,10 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 import type { TooltipProps, TooltipEmits } from './types';
 import { createPopper, type Instance } from '@popperjs/core';
-import useClickOutside from '../../hooks/useClickOutSide';
+import useClickOutside from '../../hooks/useClickOutside';
 import { debounce } from 'lodash';
 
 const props = withDefaults(defineProps<TooltipProps>(), {
@@ -31,8 +31,8 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 const emits = defineEmits<TooltipEmits>()
 
 const isOpen = ref(false)
-const outerEvents: Record<string, any> = ref({})
-const events: Record<string, any> = ref({})
+const outerEvents: Record<string, any> = reactive({})
+const events: Record<string, any> = reactive({})
 const popperContainerNode = ref<HTMLElement>()
 const triggrtNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
@@ -88,14 +88,6 @@ const closeFinal = () => {
   closeDebounce()
 }
 
-const togglePopper = () => {
-  if (isOpen.value) {
-    closeFinal()
-  } else {
-    openFinal()
-  }
-}
-
 //判断是否点击外部
 useClickOutside(popperContainerNode, () => {
   if (props.trigger === 'click' && isOpen.value && !props.manual) {
@@ -124,7 +116,7 @@ const attachEvent = () => {
     outerEvents['mouseleave'] = closeFinal
   } else {
     //click
-    events['click'] = togglePopper
+    events['click'] = openFinal
   }
 }
 
