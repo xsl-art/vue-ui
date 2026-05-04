@@ -19,6 +19,10 @@ import { createPopper, type Instance } from '@popperjs/core';
 import useClickOutside from '../../hooks/useClickOutside';
 import { debounce } from 'lodash';
 
+defineOptions({
+  name: 'VkTooltip'
+})
+
 const props = withDefaults(defineProps<TooltipProps>(), {
   trigger: 'click',
   placement: 'bottom',

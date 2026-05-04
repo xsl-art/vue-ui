@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { h, ref } from 'vue';
 import Button from './components/Button/Button.vue';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
@@ -7,12 +7,22 @@ import Icon from './components/Icon/Icon.vue';
 import Alert from './components/Alert/Alert.vue';
 import Tooltip from './components/Tooltip/Tooltip.vue';
 import type { TooltipInstance } from './components/Tooltip/types';
+import Dropdown from './components/Dropdown/Dropdown.vue';
+import type { MenuOption } from './components/Dropdown/types';
 
 
 //初始激活项
 const openedValue = ref(["a"]);
 
 const toolTipRef = ref<TooltipInstance>()
+
+const menu: MenuOption[] = [
+  { label: 'srfaga', key: 1 },
+  { label: 222, key: 2, divided: true },
+  { label: 444, key: 3, disabled: true },
+  { label: 'faHardOfHearing', key: 4 },
+  { label: h('h4', 'hello peter'), key: 5 }
+]
 </script>
 
 <template>
@@ -57,10 +67,9 @@ const toolTipRef = ref<TooltipInstance>()
     </template>
   </Tooltip>
 
-  <Tooltip trigger="hover">
+  <Dropdown trigger="hover" placement="right" :menu-options="menu">
     <img src="../src/assets/vue.svg" alt="" class="logo" width="125" height="125">
     <template #content>
-      <span>你好啊tooltip</span>
     </template>
-  </Tooltip>
+  </Dropdown>
 </template>
