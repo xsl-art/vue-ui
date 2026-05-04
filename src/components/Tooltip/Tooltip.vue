@@ -4,7 +4,7 @@
       <slot></slot>
     </div>
     <Transition name="fade">
-      <div class="vk-tooltip__popper" v-if="isOpen" ref="popperNode">
+      <div class="vk-tooltip__popper" v-if="isOpen" ref="popperNode" v-on="popperEvents">
         <slot name="content">{{ content }}</slot>
         <div id="arrow" data-popper-arrow></div>
       </div>
@@ -37,6 +37,7 @@ const emits = defineEmits<TooltipEmits>()
 const isOpen = ref(false)
 const outerEvents: Record<string, any> = reactive({})
 const events: Record<string, any> = reactive({})
+const popperEvents: Record<string, any> = reactive({})
 const popperContainerNode = ref<HTMLElement>()
 const triggrtNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
@@ -108,6 +109,9 @@ const clearEvent = () => {
   Object.keys(outerEvents).forEach(key => {
     delete outerEvents[key]
   })
+  Object.keys(popperEvents).forEach(key => {
+    delete popperEvents[key]
+  })
 }
 //事件绑定
 const attachEvent = () => {
@@ -118,6 +122,7 @@ const attachEvent = () => {
   if (props.trigger === 'hover') {
     events['mouseenter'] = openFinal
     outerEvents['mouseleave'] = closeFinal
+    popperEvents['mouseenter'] = openFinal
   } else {
     //click
     events['click'] = openFinal
