@@ -30,6 +30,10 @@ import { ref } from 'vue';
 import type { AlertProps, AlertEmits, AlertInstance } from './types';
 import Icon from '../Icon/Icon.vue';
 
+defineOptions({
+  name: 'VkIcon'
+})
+
 const props = withDefaults(defineProps<AlertProps>(), {
   effect: 'light',
   center: false,

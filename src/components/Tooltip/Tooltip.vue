@@ -16,8 +16,12 @@
 import { computed, ref, watch } from 'vue';
 import type { TooltipProps, TooltipEmits } from './types';
 import { createPopper, type Instance } from '@popperjs/core';
-import useClickOutside from '../../hooks/useClickOutSide';
+import useClickOutside from '../../hooks/useClickOutside';
 import { debounce } from 'lodash';
+
+defineOptions({
+  name: 'VkTooltip'
+})
 
 const props = withDefaults(defineProps<TooltipProps>(), {
   trigger: 'click',
