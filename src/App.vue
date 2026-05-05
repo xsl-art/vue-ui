@@ -11,6 +11,7 @@ import Dropdown from './components/Dropdown/Dropdown.vue';
 import type { MenuOption } from './components/Dropdown/types';
 import { createMessage } from './components/Message/methods';
 import Switch from './components/Switch/Switch.vue';
+import Input from './components/Input/Input.vue';
 
 
 //初始激活项
@@ -84,4 +85,9 @@ onMounted(() => {
   <Switch model-value="boolean" active-text="开" inactive-text="关"></Switch>
   <Switch model-value="boolean" active-text="开" inactive-text="关" size="large"></Switch>
   <Switch model-value="boolean" active-text="开" inactive-text="关" size="small"></Switch>
+
+  <br />
+  <Input type="text" size="large" style="width: 50px;" clearable />
+  <Input type="password" size="small" show-password clearable />
+  <Input type="textarea" size="small" />
 </template>
