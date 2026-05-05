@@ -10,6 +10,7 @@ import type { TooltipInstance } from './components/Tooltip/types';
 import Dropdown from './components/Dropdown/Dropdown.vue';
 import type { MenuOption } from './components/Dropdown/types';
 import { createMessage } from './components/Message/methods';
+import Switch from './components/Switch/Switch.vue';
 
 
 //初始激活项
@@ -80,4 +81,7 @@ onMounted(() => {
   </Dropdown>
 
   <br />
+  <Switch model-value="boolean" active-text="开" inactive-text="关"></Switch>
+  <Switch model-value="boolean" active-text="开" inactive-text="关" size="large"></Switch>
+  <Switch model-value="boolean" active-text="开" inactive-text="关" size="small"></Switch>
 </template>
