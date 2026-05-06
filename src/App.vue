@@ -12,6 +12,8 @@ import type { MenuOption } from './components/Dropdown/types';
 import { createMessage } from './components/Message/methods';
 import Switch from './components/Switch/Switch.vue';
 import Input from './components/Input/Input.vue';
+import type { SelectOption } from './components/Select/types';
+import Select from './components/Select/Select.vue';
 
 
 //初始激活项
@@ -26,6 +28,25 @@ const menu: MenuOption[] = [
   { label: 'faHardOfHearing', key: 4 },
   { label: h('h4', 'hello peter'), key: 5 }
 ]
+
+const options: SelectOption[] = [
+  { label: "hello", value: "1" },
+  { label: "xyz", value: "2" },
+  { label: "testing", value: "3" },
+  { label: "123", value: "4", disabled: true },
+  { label: "fhafhaskfhkefh", value: "5" },
+  { label: "asf", value: "8" },
+];
+
+const handleFetch = async (query: string): Promise<SelectOption[]> => {
+  if (!query) return [];
+  const res = await fetch(`https://api.github.com/search/repositories?q=${query}`);
+  const data = (await res.json()) as { items: any[] };
+  return data.items.slice(0, 10).map((item) => ({
+    label: item.name,
+    value: item.node_id,
+  }));
+};
 
 onMounted(() => {
   createMessage({ message: 'dhakfh', duration: 3000, type: 'success' }),
@@ -90,4 +111,9 @@ onMounted(() => {
   <Input type="text" size="large" style="width: 50px;" clearable />
   <Input type="password" size="small" show-password clearable />
   <Input type="textarea" size="small" />
+
+  <br />
+  <Select model-value="" placeholder="请选择" :options="options" filterable></Select>
+  <Select model-value="" placeholder="请选择" :options="options" filterable remote :remote-method="handleFetch"></Select>
+
 </template>
