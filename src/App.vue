@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { h, onMounted, ref } from 'vue';
+import { h, onMounted, reactive, ref } from 'vue';
 import Button from './components/Button/Button.vue';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
@@ -14,6 +14,9 @@ import Switch from './components/Switch/Switch.vue';
 import Input from './components/Input/Input.vue';
 import type { SelectOption } from './components/Select/types';
 import Select from './components/Select/Select.vue';
+import type { FormInstance, FormRules } from './components/Form/types';
+import FormItem from './components/Form/FormItem.vue';
+import Form from './components/Form/Form.vue';
 
 
 //初始激活项
@@ -46,6 +49,41 @@ const handleFetch = async (query: string): Promise<SelectOption[]> => {
     label: item.name,
     value: item.node_id,
   }));
+};
+
+const formRef = ref<FormInstance>();
+const model = reactive({
+  email: "",
+  password: "",
+  test: "",
+  confirmPwd: "",
+});
+
+const rules: FormRules = {
+  email: [{ type: "email", required: true, trigger: "blur" }],
+  password: [{ type: "string", required: true, trigger: "blur", min: 3, max: 5 }],
+  test: [{ type: "string", required: true, trigger: "blur" }],
+  confirmPwd: [
+    { type: "string", required: true, trigger: "blur" },
+    {
+      validator: (_rule, value) => value === model.password,
+      trigger: "blur",
+      message: "两个密码必须相同",
+    },
+  ],
+};
+
+const submit = async () => {
+  try {
+    await formRef.value?.validate();
+    console.log("passed");
+  } catch (e) {
+    console.log("the error", e);
+  }
+};
+
+const reset = () => {
+  formRef.value?.resetFields();
 };
 
 onMounted(() => {
@@ -116,4 +154,34 @@ onMounted(() => {
   <Select model-value="" placeholder="请选择" :options="options" filterable></Select>
   <Select model-value="" placeholder="请选择" :options="options" filterable remote :remote-method="handleFetch"></Select>
 
+  <br />
+  <div>
+    <Form :model="model" :rules="rules" ref="formRef" label-position="left">
+      <FormItem label="the email" prop="email">
+        <Input v-model="model.email" />
+      </FormItem>
+      <FormItem label="the password" prop="password">
+        <template #label="{ label }">
+          <Button>{{ label }}</Button>
+        </template>
+        <Input type="password" v-model="model.password" />
+      </FormItem>
+      <FormItem label="test" prop="test">
+        <template #default="{ validate }">
+          <input type="text" v-model="model.test" @blur="() => validate('blur')" />
+        </template>
+      </FormItem>
+      <FormItem label="confirmPwd" prop="confirmPwd">
+        <Input type="password" v-model="model.confirmPwd" />
+      </FormItem>
+      <div>
+        <Button type="primary" @click.prevent="submit">Submit</Button>
+        <Button @click.prevent="reset">Reset</Button>
+      </div>
+    </Form>
+    <div class="form-demo-value">
+      <span>form value:</span>
+      <pre>{{ model }}</pre>
+    </div>
+  </div>
 </template>
