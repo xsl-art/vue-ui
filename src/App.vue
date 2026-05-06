@@ -17,7 +17,7 @@ import Select from './components/Select/Select.vue';
 import type { FormInstance, FormRules } from './components/Form/types';
 import FormItem from './components/Form/FormItem.vue';
 import Form from './components/Form/Form.vue';
-
+import Dialog from './components/Dialog/Dialog.vue';
 
 //初始激活项
 const openedValue = ref(["a"]);
@@ -85,6 +85,8 @@ const submit = async () => {
 const reset = () => {
   formRef.value?.resetFields();
 };
+
+const visible = ref(false);
 
 onMounted(() => {
   createMessage({ message: 'dhakfh', duration: 3000, type: 'success' }),
@@ -184,4 +186,24 @@ onMounted(() => {
       <pre>{{ model }}</pre>
     </div>
   </div>
+
+  <br />
+  <Button type="success" @click="visible = true">点击弹出对话框</Button>
+  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal>
+    <p>正文内容</p>
+    <Form :model="model" :rules="rules" ref="formRef">
+      <FormItem label="邮箱" prop="email">
+        <Input v-model="model.email" />
+      </FormItem>
+      <FormItem label="密码" prop="password">
+        <template #label="{ label }">
+          <Button>{{ label }}</Button>
+        </template>
+        <Input type="password" v-model="model.password" />
+      </FormItem>
+    </Form>
+    <template #footer>
+      <Button @click="visible = false">确定</Button>
+    </template>
+  </Dialog>
 </template>

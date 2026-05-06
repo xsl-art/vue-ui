@@ -1,0 +1,131 @@
+
+.vk-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+  z-index: 2000;
+  outline: none;
+
+  &.is-modal {
+    background-color: rgba(0, 0, 0, 0.45);
+  }
+
+  /* 无遮罩：不挡背后交互，仅对话框可点 */
+  &:not(.is-modal) {
+    background: transparent;
+    pointer-events: none;
+
+    .vk-dialog {
+      pointer-events: auto;
+    }
+  }
+}
+
+.vk-dialog__wrapper {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+
+  &.is-align-center {
+    align-items: center;
+    padding-top: 0 !important;
+  }
+}
+
+.vk-dialog {
+  position: relative;
+  margin: 0 auto 50px;
+  background: var(--vk-bg-color-overlay);
+  border-radius: var(--vk-border-radius-base);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 0 6px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  max-width: calc(100vw - 32px);
+  display: flex;
+  flex-direction: column;
+
+  &.is-fullscreen {
+    width: 100% !important;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.vk-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 16px 10px;
+  border-bottom: 1px solid var(--vk-border-color-lighter);
+  flex-shrink: 0;
+}
+
+.vk-dialog__title {
+  font-size: var(--vk-font-size-large);
+  font-weight: var(--vk-font-weight-primary);
+  color: var(--vk-text-color-primary);
+  line-height: 1.4;
+  flex: 1;
+  padding-right: 12px;
+}
+
+.vk-dialog__close{
+  cursor: pointer;
+  &:hover{
+    opacity: .8;
+  }
+}
+
+.vk-dialog__body {
+  padding: 16px;
+  color: var(--vk-text-color-regular);
+  font-size: var(--vk-font-size-base);
+  line-height: 1.6;
+  flex: 1;
+  overflow: auto;
+}
+
+.vk-dialog__footer {
+  padding: 12px 16px;
+  text-align: right;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-top: 1px solid var(--vk-border-color-lighter);
+}
+
+.vk-dialog.is-fullscreen .vk-dialog__body {
+  flex: 1;
+  min-height: 0;
+}
+
+// 遮罩淡入淡出 + 内容轻微缩放
+.vk-dialog-fade-enter-active,
+.vk-dialog-fade-leave-active {
+  transition: opacity var(--vk-transition-duration) ease;
+}
+
+.vk-dialog-fade-enter-active .vk-dialog,
+.vk-dialog-fade-leave-active .vk-dialog {
+  transition:
+    transform var(--vk-transition-duration) ease,
+    opacity var(--vk-transition-duration) ease;
+}
+
+.vk-dialog-fade-enter-from,
+.vk-dialog-fade-leave-to {
+  opacity: 0;
+}
+
+.vk-dialog-fade-enter-from .vk-dialog,
+.vk-dialog-fade-leave-to .vk-dialog {
+  transform: translateY(-16px) scale(0.96);
+  opacity: 0;
+}
