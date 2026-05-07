@@ -25,6 +25,8 @@ export interface FormItemContext {
   validate: (trigger?: string) => Promise<any>;
   resetField(): void;
   clearValidate(): void;
+  inputId?: string;
+  errorId?: string;
 }
 
 //表单暴露给子项的方法，添加和删除字段
