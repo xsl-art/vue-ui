@@ -86,9 +86,22 @@
 }
 
 .vk-dialog__close{
+  border: none;
+  background: transparent;
+  padding: 4px;
   cursor: pointer;
-  &:hover{
-    opacity: .8;
+  color: var(--vk-text-color-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--vk-border-radius-small);
+  transition:
+    color var(--vk-transition-duration-fast),
+    background-color var(--vk-transition-duration-fast);
+
+  &:hover {
+    color: var(--vk-color-primary);
+    background-color: var(--vk-fill-color-light);
   }
 }
 
