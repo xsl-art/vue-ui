@@ -189,7 +189,7 @@ onMounted(() => {
 
   <br />
   <Button type="success" @click="visible = true">点击弹出对话框</Button>
-  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal>
+  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal draggable>
     <p>正文内容</p>
     <Form :model="model" :rules="rules" ref="formRef">
       <FormItem label="邮箱" prop="email">
