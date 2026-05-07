@@ -114,8 +114,7 @@ const togglePasswordVisible = () => {
 const NOOP = () => { }
 
 watch(() => props.modelValue, (newValue) => {
-  if (!newValue) return
-  innerValue.value = newValue
+  innerValue.value = newValue ?? ''
 })
 
 defineExpose({

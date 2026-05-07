@@ -221,7 +221,7 @@ const hasSelectedValue = computed(() => !!states.selectOption);
 
 const showClearIcon = computed(() => {
   return (
-    states.mouseHover && props.clearabled && states.inputValue.trim() !== "" && hasSelectedValue
+    states.mouseHover && props.clearabled && states.inputValue.trim() !== "" && hasSelectedValue.value
   );
 });
 
