@@ -7,9 +7,10 @@
     'is-circle': circle,
     'is-disabled': disabled,
     'is-loading': loading
-  }" :disabled="disabled || loading" :type="nativeType" :autofocus="autofocus">
-    <Icon icon="spinner" spin v-if="loading"></Icon>
-    <Icon :icon="icon!" v-if="icon"></Icon>
+  }" :disabled="disabled || loading" :type="nativeType" :autofocus="autofocus" :aria-busy="loading"
+    :aria-disabled="disabled || loading">
+    <Icon icon="spinner" spin v-if="loading" aria-hidden="true" />
+    <Icon :icon="icon" v-if="icon" />
     <span>
       <slot></slot>
     </span>
