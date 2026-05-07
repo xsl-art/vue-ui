@@ -153,7 +153,7 @@ onMounted(() => {
   <Input type="textarea" size="small" />
 
   <br />
-  <Select model-value="" placeholder="请选择" :options="options" filterable></Select>
+  <Select model-value="" placeholder="请选择" :options="options" filterable multiple></Select>
   <Select model-value="" placeholder="请选择" :options="options" filterable remote :remote-method="handleFetch"></Select>
 
   <br />

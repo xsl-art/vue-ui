@@ -28,8 +28,8 @@ export interface SelectProps {
 
 export interface SelectState {
   inputValue: string;
-  selectOption: null | SelectOption;
-  //selectOptions: SelectOption[] | [];
+  selectedOption: null | SelectOption;
+  selectedOptions: SelectOption[];
   mouseHover: boolean;
   loading: boolean;
   highlightIndex: number;

@@ -1,11 +1,19 @@
 <template>
-  <div class="vk-select" :class="{ 'is-disabled': disabled }" @click="toggleDropdown"
+  <div class="vk-select" :class="{ 'is-disabled': disabled, 'is-multiple': multiple }" @click="toggleDropdown"
     @mouseenter="states.mouseHover = true" @mouseleave="states.mouseHover = false">
     <Tooltip placement="bottom" ref="toolTipRef" :popper-options="popperOptions" manual
       @click-outside="controlDropdown(false)">
       <Input v-model="states.inputValue" :disabled="disabled" :placeholder="filteredPlaceholder" ref="inputRef"
         :readonly="!isDropdownShow || !filterable" role="combobox" :aria-activedescendant="activeDescendantId"
         @input="debounceOnFilter" @keydown="handleKeydown">
+        <template #prefix>
+          <div class="vk-select__tags">
+            <Tag ref="tagRef" type="info" size="small" effect="light" closable :disabled="disabled"
+              v-for="option in states.selectedOptions" :key="option.value" @close="removeTag(option)">
+              {{ option.label }}
+            </Tag>
+          </div>
+        </template>
         <template #suffix>
           <Icon class="vk-input__clear" v-if="showClearIcon" icon="circle-xmark" @mousedown.prevent="NOOP"
             @click.stop="handleClear" />
@@ -22,8 +30,9 @@
         <ul class="vk-select__menu" v-else :id="listboxId">
           <template v-for="(item, index) in filteredOptions" :key="index">
             <li class="vk-select__menu-item" :class="{
-              'is-disabled': item.disabled, 'is-selected': isOptionSelected(item),
-              'is-highlighted': states.highlightIndex === index
+              'is-disabled': item.disabled,
+              'is-selected': isOptionSelected(item),
+              'is-highlighted': states.highlightIndex === index,
             }" :id="getOptionId(item, index)" role="option" @click.stop="itemSelect(item)">
               <span class="vk-select__menu-item-label">
                 <RenderVNode :VNode="renderLabel ? renderLabel(item) : item.label"></RenderVNode>
@@ -38,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, ref, watch } from "vue";
+import { computed, reactive, ref, watch, nextTick } from "vue";
 import Icon from "../Icon/Icon.vue";
 import Input from "../Input/Input.vue";
 import Tooltip from "../Tooltip/Tooltip.vue";
@@ -47,6 +56,9 @@ import RenderVNode from "../../commen/RenderVNode";
 import type { TooltipInstance } from "../Tooltip/types";
 import type { InputInstance } from "../Input/types";
 import { debounce, isFunction } from "lodash";
+import Tag from "../Tag/Tag.vue";
+import type { TagInstance } from "../Tag/types";
+
 
 defineOptions({
   name: "VkSelect",
@@ -94,11 +106,22 @@ const findOption = (value: string | string[]) => {
   return option ? option : null;
 };
 
+//多选初始选项
+const findOptions = (value: string | string[]) => {
+  const values = Array.isArray(value) ? value : value ? [value] : [];
+  const options = props.options.filter((option) => values.includes(option.value));
+  return options ? options : [];
+};
+
+const tagRef = ref<TagInstance>()
 const toolTipRef = ref<TooltipInstance>();
 const initialOption = findOption(props.modelValue);
+const initialOptions = findOptions(props.modelValue);
 const inputRef = ref<InputInstance>();
 const filteredOptions = ref(props.options);
 const timeout = computed(() => (props.remote ? 300 : 0)); //远程搜索300ms延迟
+
+
 watch(
   () => props.options,
   (newVal) => {
@@ -115,14 +138,29 @@ watch(
 );
 
 const states = reactive<SelectState>({
-  inputValue: initialOption ? initialOption.label : "",
-  selectOption: initialOption,
+  inputValue: props.multiple ? "" : initialOption ? initialOption.label : "",
+  selectedOption: initialOption,
+  selectedOptions: initialOptions as SelectOption[],
   mouseHover: false,
   loading: false,
   highlightIndex: -1,
 });
 
 const isDropdownShow = ref(false);
+
+const updateDropdownPosition = async () => {
+  await nextTick();
+  if (!isDropdownShow.value) return;
+  toolTipRef.value?.update?.();
+};
+
+watch(
+  () => states.selectedOptions.length,
+  () => {
+    if (props.multiple) updateDropdownPosition();
+  },
+  { flush: "post" },
+);
 
 const toggleDropdown = () => {
   if (props.disabled) return;
@@ -133,137 +171,192 @@ const toggleDropdown = () => {
   }
 };
 
-
 const controlDropdown = async (show: boolean) => {
   if (show) {
-    if (props.filterable && states.selectOption) {
-      states.inputValue = ''
+    if (props.filterable && states.selectedOption) {
+      states.inputValue = "";
     }
 
-    if (props.filterable) generateFilterOptions(states.inputValue)
-    toolTipRef.value?.show()
-    const selectedIndex = filteredOptions.value.findIndex(option => isOptionSelected(option) && !option.disabled)
-    states.highlightIndex = selectedIndex > -1 ? selectedIndex : findNextEnabledOption(-1, 1)
+    if (props.filterable) generateFilterOptions(states.inputValue);
+    toolTipRef.value?.show();
+    await updateDropdownPosition();
+    const selectedIndex = filteredOptions.value.findIndex(
+      (option) => isOptionSelected(option) && !option.disabled,
+    );
+    states.highlightIndex = selectedIndex > -1 ? selectedIndex : findNextEnabledOption(-1, 1);
   } else {
-    toolTipRef.value?.hide()
+    toolTipRef.value?.hide();
     if (props.filterable) {
-      states.inputValue = states.selectOption ? states.selectOption.label : ''
+      states.inputValue = props.multiple ? '' : states.selectedOption ? states.selectedOption.label : "";
     }
-    states.highlightIndex = -1
+    states.highlightIndex = -1;
   }
   isDropdownShow.value = show;
-  emits('visible-change', show)
+  emits("visible-change", show);
 };
 
 //过滤
 const generateFilterOptions = async (searchVlaue: string) => {
-  if (!props.filterable) return
+  if (!props.filterable) return;
   if (props.filterMethod && isFunction(props.filterMethod)) {
-    filteredOptions.value = props.filterMethod(searchVlaue)
+    filteredOptions.value = props.filterMethod(searchVlaue);
   } else if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
-    states.loading = true
+    states.loading = true;
     try {
-      filteredOptions.value = await props.remoteMethod(searchVlaue)
+      filteredOptions.value = await props.remoteMethod(searchVlaue);
     } catch (e) {
-      console.error(e)
-      filteredOptions.value = []
+      console.error(e);
+      filteredOptions.value = [];
     } finally {
-      states.loading = false
+      states.loading = false;
     }
   } else {
-    filteredOptions.value = props.options.filter(Option => Option.label.includes(searchVlaue))
+    filteredOptions.value = props.options.filter((Option) => Option.label.includes(searchVlaue));
   }
-  states.highlightIndex = -1
-}
+  states.highlightIndex = -1;
+};
 
-const onFilter = () => generateFilterOptions(states.inputValue)
+const onFilter = () => generateFilterOptions(states.inputValue);
 
-const debounceOnFilter = debounce(() => onFilter(), timeout.value)
+const debounceOnFilter = debounce(() => onFilter(), timeout.value);
 
 //placeholder
 const filteredPlaceholder = computed(() => {
+  if (props.multiple && states.selectedOptions.length > 0) return ''
   if (!props.filterable || !isDropdownShow.value) return props.placeholder;
-  if (states.selectOption) return states.selectOption.label;
+  if (states.selectedOption) return states.selectedOption.label;
   return props.placeholder;
 });
 
 const handleKeydown = (e: KeyboardEvent) => {
   switch (e.key) {
-    case 'Enter':
+    case "Enter":
       if (!isDropdownShow.value) {
-        controlDropdown(true)
+        controlDropdown(true);
       } else if (states.highlightIndex > -1 && filteredOptions.value[states.highlightIndex]) {
-        itemSelect(filteredOptions.value[states.highlightIndex])
+        itemSelect(filteredOptions.value[states.highlightIndex]);
       } else {
-        controlDropdown(false)
+        controlDropdown(false);
       }
       break;
     case "Escape":
-      if (isDropdownShow.value) controlDropdown(false)
-      break
-    case 'ArrowUp':
-    case 'ArrowDown':
-      e.preventDefault()
-      if (!isDropdownShow.value) controlDropdown(true)
+      if (isDropdownShow.value) controlDropdown(false);
+      break;
+    case "ArrowUp":
+    case "ArrowDown":
+      e.preventDefault();
+      if (!isDropdownShow.value) controlDropdown(true);
       if (filteredOptions.value.length > 0) {
-        const direction = e.key === 'ArrowDown' ? 1 : -1
+        const direction = e.key === "ArrowDown" ? 1 : -1;
         states.highlightIndex = findNextEnabledOption(states.highlightIndex, direction);
       }
-      break
+      break;
+    case 'Backspace':
+      if (props.multiple && states.inputValue === "" && states.selectedOptions.length > 0) {
+        removeTag(states.selectedOptions[states.selectedOptions.length - 1])
+      }
+      break;
     default:
-      break
+      break;
   }
 };
 
 const NOOP = () => { };
 
-const hasSelectedValue = computed(() => !!states.selectOption);
+const hasSelectedValue = computed(() => props.multiple ? states.selectedOptions.length > 0 : !!states.selectedOption);
 
 const showClearIcon = computed(() => {
   return (
-    states.mouseHover && props.clearabled && states.inputValue.trim() !== "" && hasSelectedValue.value
+    states.mouseHover &&
+    props.clearabled &&
+    states.inputValue.trim() !== "" &&
+    hasSelectedValue.value &&
+    !props.multiple
   );
 });
 
 const handleClear = () => {
   states.inputValue = "";
-  states.selectOption = null;
+  states.selectedOption = null;
+  states.selectedOptions = []
   emits("clear");
-  emits("change", "");
-  emits("update:modelValue", "");
+  emits("change", props.multiple ? [] : "");
+  emits("update:modelValue", props.multiple ? [] : "");
 };
 
-const isOptionSelected = (item: SelectOption) => states.selectOption?.value === item.value;
+const isOptionSelected = (item: SelectOption) => props.multiple ?
+  states.selectedOptions.some(option => option.value === item.value) :
+  states.selectedOption?.value === item.value;
 
 const syncSelectedByModelValue = (value: string | string[]) => {
+  if (props.multiple) {
+    states.selectedOptions = findOptions(value)
+    states.selectedOption = null
+    states.inputValue = ''
+    return
+  }
   const option = findOption(value);
-  states.selectOption = option;
+  states.selectedOption = option;
+  states.selectedOptions = []
   states.inputValue = option ? option.label : "";
 };
 
-const getOptionId = (item: SelectOption, index: number) => `select-item-${item.value}-${index}`
+const getOptionId = (item: SelectOption, index: number) => `select-item-${item.value}-${index}`;
 
 const itemSelect = (item: SelectOption) => {
-  if (item.disabled) return
-  states.inputValue = item.label
-  states.selectOption = item
-  emits('change', item.value)
-  emits('update:modelValue', item.value)
-  controlDropdown(false)
-  inputRef.value?.ref?.focus?.()
+  if (item.disabled) return;
+  if (props.multiple) {
+    multipleItemSelect(item)
+    inputRef.value?.ref.focus?.()
+    return
+  }
+  states.inputValue = item.label;
+  states.selectedOption = item;
+  emits("change", item.value);
+  emits("update:modelValue", item.value);
+  controlDropdown(false);
+  inputRef.value?.ref?.focus?.();
+};
+
+const getMultipleValues = () => states.selectedOptions.map(option => option.value)
+
+const multipleItemSelect = (item: SelectOption) => {
+  const selectedIndex = states.selectedOptions.findIndex(option => option.value === item.value)
+  if (selectedIndex > -1) {
+    states.selectedOptions.splice(selectedIndex, 1)
+  } else {
+    states.selectedOptions.push(item)
+  }
+  const values = getMultipleValues()
+  states.inputValue = ''
+  emits('multiple-choose', values)
+  emits('change', values)
+  emits('update:modelValue', values)
+}
+const removeTag = (option: SelectOption) => {
+  const selectedIndex = states.selectedOptions.findIndex(
+    (selectedOption) => selectedOption.value === option.value,
+  );
+  if (selectedIndex === -1) return;
+  states.selectedOptions.splice(selectedIndex, 1);
+  states.inputValue = "";
+  const values = getMultipleValues();
+  emits("multiple-choose", values);
+  emits("change", values);
+  emits("update:modelValue", values);
 }
 
 const findNextEnabledOption = (startIndex: number, direction: 1 | -1) => {
-  if (filteredOptions.value.length === 0) return -1
-  let steps = 0
-  let index = startIndex
+  if (filteredOptions.value.length === 0) return -1;
+  let steps = 0;
+  let index = startIndex;
   while (steps < filteredOptions.value.length) {
-    index = (index + direction + filteredOptions.value.length) % filteredOptions.value.length
-    if (!filteredOptions.value[index].disabled) return index
-    steps++
+    index = (index + direction + filteredOptions.value.length) % filteredOptions.value.length;
+    if (!filteredOptions.value[index].disabled) return index;
+    steps++;
   }
-  return -1
-}
+  return -1;
+};
 
 const activeDescendantId = computed(() => {
   const index = states.highlightIndex;

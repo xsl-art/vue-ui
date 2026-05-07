@@ -95,8 +95,8 @@ const closeFinal = () => {
 
 //判断是否点击外部
 useClickOutside(popperContainerNode, () => {
-  if (props.trigger === 'click' && isOpen.value && !props.manual) {
-    closeFinal()
+  if (props.trigger === 'click' && isOpen.value) {
+    if (!props.manual) closeFinal()
     emits('click-outside', true)
   }
 })
@@ -154,8 +154,12 @@ watch(() => isOpen.value, (newVal) => {
 }, { flush: 'post' })
 
 
+const update = () => popperInstance?.update()
+
+
 defineExpose({
   show: openFinal,
-  hide: closeFinal
+  hide: closeFinal,
+  update
 })
 </script>
