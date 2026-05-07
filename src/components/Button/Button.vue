@@ -7,7 +7,8 @@
     'is-circle': circle,
     'is-disabled': disabled,
     'is-loading': loading
-  }" :disabled="disabled || loading" :type="nativeType" :autofocus="autofocus">
+  }" :disabled="disabled || loading" :type="nativeType" :autofocus="autofocus" :aria-busy="loading"
+    :aria-disabled="disabled || loading">
     <span>
       <slot></slot>
     </span>
