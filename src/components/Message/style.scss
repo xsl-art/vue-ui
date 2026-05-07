@@ -39,7 +39,11 @@
   &__close{
     display: flex;
     align-items: center;
+    border: none;
+    background-color:  var(--vk-message-bg-color);
     svg{
+      width: .8em;
+      height: .8em;
       cursor: pointer;
     }
   }
