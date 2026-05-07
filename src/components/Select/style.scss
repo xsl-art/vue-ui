@@ -51,6 +51,13 @@
       overflow: hidden;
     }
 
+    .vk-input__clear{
+      display: flex;
+      align-items: center;
+      border: none;
+      background:none;
+    }
+
     .header-angle {
       transition: transform var(--vk-transition-duration);
 
