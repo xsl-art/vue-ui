@@ -1,10 +1,10 @@
 <template>
   <div class="vk-tooltip" v-on="outerEvents" ref="popperContainerNode">
-    <div class="vk-tooltip__trigger" ref="triggrtNode" v-on="events">
+    <div class="vk-tooltip__trigger" ref="triggrtNode" v-on="events" :aria-describedby="isOpen ? tooltipId : undefined">
       <slot></slot>
     </div>
     <Transition name="fade">
-      <div class="vk-tooltip__popper" v-if="isOpen" ref="popperNode" v-on="popperEvents">
+      <div class="vk-tooltip__popper" v-if="isOpen" ref="popperNode" v-on="popperEvents" role="tooltip" :id="tooltipId">
         <slot name="content">{{ content }}</slot>
         <div id="arrow" data-popper-arrow></div>
       </div>
@@ -13,85 +13,87 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
-import type { TooltipProps, TooltipEmits } from './types';
-import { createPopper, type Instance } from '@popperjs/core';
-import useClickOutside from '../../hooks/useClickOutside';
-import { debounce } from 'lodash';
+import { computed, reactive, ref, watch } from "vue";
+import type { TooltipProps, TooltipEmits } from "./types";
+import { createPopper, type Instance } from "@popperjs/core";
+import useClickOutside from "../../hooks/useClickOutside";
+import { debounce } from "lodash";
 
 defineOptions({
-  name: 'VkTooltip'
-})
+  name: "VkTooltip",
+});
 
 const props = withDefaults(defineProps<TooltipProps>(), {
-  trigger: 'click',
-  placement: 'bottom',
-  transition: 'fade',
+  trigger: "click",
+  placement: "bottom",
+  transition: "fade",
   manual: false,
   openDelay: 0,
-  closeDelay: 0
-})
+  closeDelay: 0,
+});
 
-const emits = defineEmits<TooltipEmits>()
+const emits = defineEmits<TooltipEmits>();
 
-const isOpen = ref(false)
-const outerEvents: Record<string, any> = reactive({})
-const events: Record<string, any> = reactive({})
-const popperEvents: Record<string, any> = reactive({})
-const popperContainerNode = ref<HTMLElement>()
-const triggrtNode = ref<HTMLElement>()
-const popperNode = ref<HTMLElement>()
-let popperInstance: null | Instance = null
-let openTimes = 0
-let closeTimes = 0
+const tooltipId = `vk-tooltip-${Math.random().toString(36).slice(2, 8)}`;
+
+const isOpen = ref(false);
+const outerEvents: Record<string, any> = reactive({});
+const events: Record<string, any> = reactive({});
+const popperEvents: Record<string, any> = reactive({});
+const popperContainerNode = ref<HTMLElement>();
+const triggrtNode = ref<HTMLElement>();
+const popperNode = ref<HTMLElement>();
+let popperInstance: null | Instance = null;
+let openTimes = 0;
+let closeTimes = 0;
 
 //自定义配置
 const popperOptions = computed(() => {
   //解构用户输入的配置
-  const { modifiers: customModifiers = [], ...customOptions } = props.popperOptions ?? {}
+  const { modifiers: customModifiers = [], ...customOptions } = props.popperOptions ?? {};
 
   return {
     placement: props.placement,
     ...customOptions,
     modifiers: [
       {
-        name: 'offset',
+        name: "offset",
         options: {
-          offset: [0, 9]
-        }
+          offset: [0, 9],
+        },
       },
-      ...customModifiers
-    ]
-  }
-})
+      ...customModifiers,
+    ],
+  };
+});
 
 //显示
 const open = () => {
-  openTimes++
-  isOpen.value = true
-  emits('visible-change', true)
-}
+  openTimes++;
+  isOpen.value = true;
+  emits("visible-change", true);
+};
 
 //隐藏
 const close = () => {
-  closeTimes++
-  isOpen.value = false
-  emits('visible-change', false)
-}
+  closeTimes++;
+  isOpen.value = false;
+  emits("visible-change", false);
+};
 
-const openDebounce = debounce(open, props.openDelay)
-const closeDebounce = debounce(close, props.closeDelay)
+const openDebounce = debounce(open, props.openDelay);
+const closeDebounce = debounce(close, props.closeDelay);
 
 //互斥取消
 const openFinal = () => {
-  closeDebounce.cancel()
-  openDebounce()
-}
+  closeDebounce.cancel();
+  openDebounce();
+};
 
 const closeFinal = () => {
-  openDebounce.cancel()
-  closeDebounce()
-}
+  openDebounce.cancel();
+  closeDebounce();
+};
 
 //判断是否点击外部
 useClickOutside(popperContainerNode, () => {
@@ -99,48 +101,54 @@ useClickOutside(popperContainerNode, () => {
     if (!props.manual) closeFinal()
     emits('click-outside', true)
   }
-})
+});
 
 //事件清除
 const clearEvent = () => {
-  Object.keys(events).forEach(key => {
-    delete events[key]
-  })
-  Object.keys(outerEvents).forEach(key => {
-    delete outerEvents[key]
-  })
-  Object.keys(popperEvents).forEach(key => {
-    delete popperEvents[key]
-  })
-}
+  Object.keys(events).forEach((key) => {
+    delete events[key];
+  });
+  Object.keys(outerEvents).forEach((key) => {
+    delete outerEvents[key];
+  });
+  Object.keys(popperEvents).forEach((key) => {
+    delete popperEvents[key];
+  });
+};
 //事件绑定
 const attachEvent = () => {
-  clearEvent()
+  clearEvent();
   //手动模式直接返回
-  if (props.manual) return
+  if (props.manual) return;
   //hover
-  if (props.trigger === 'hover') {
-    events['mouseenter'] = openFinal
-    outerEvents['mouseleave'] = closeFinal
-    popperEvents['mouseenter'] = openFinal
+  if (props.trigger === "hover") {
+    events["mouseenter"] = openFinal;
+    outerEvents["mouseleave"] = closeFinal;
+    popperEvents["mouseenter"] = openFinal;
   } else {
     //click
-    events['click'] = openFinal
+    events["click"] = openFinal;
   }
-}
+};
 
 //初始化调用
-attachEvent()
+attachEvent();
 
 //监听manual
-watch(() => props.manual, () => {
-  attachEvent()
-})
+watch(
+  () => props.manual,
+  () => {
+    attachEvent();
+  },
+);
 
 //监听trigger
-watch(() => props.trigger, (newVal, oldVal) => {
-  if (newVal !== oldVal) attachEvent()
-})
+watch(
+  () => props.trigger,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) attachEvent();
+  },
+);
 
 //popper.js实例创建
 watch(() => isOpen.value, (newVal) => {
