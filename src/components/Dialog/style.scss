@@ -47,6 +47,9 @@
   max-width: calc(100vw - 32px);
   display: flex;
   flex-direction: column;
+  --vk-dialog-translate-x: 0;
+  --vk-dialog-translate-y: 0;
+  transform: translate(var(--vk-dialog-translate-x), var(--vk-dialog-translate-y));
 
   &.is-fullscreen {
     width: 100% !important;
@@ -66,6 +69,11 @@
   padding: 16px 16px 10px;
   border-bottom: 1px solid var(--vk-border-color-lighter);
   flex-shrink: 0;
+
+  &.is-draggable {
+    cursor: move;
+    user-select: none;
+  }
 }
 
 .vk-dialog__title {
@@ -126,6 +134,6 @@
 
 .vk-dialog-fade-enter-from .vk-dialog,
 .vk-dialog-fade-leave-to .vk-dialog {
-  transform: translateY(-16px) scale(0.96);
+  transform: translate(var(--vk-dialog-translate-x), calc(var(--vk-dialog-translate-y) - 16px)) scale(0.96);
   opacity: 0;
 }

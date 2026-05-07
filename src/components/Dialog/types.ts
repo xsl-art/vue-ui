@@ -10,9 +10,12 @@ export interface DialogProps {
   appendToBody?: boolean;
   lockScroll?: boolean;
   closeOnClickModal?: boolean;
+  closeOnPressEscape?: boolean;
   showClose?: boolean;
   destroyOnClose?: boolean;
   alignCenter?: boolean;
+  /** 是否开启拖拽 */
+  draggable?: boolean;
   //对话框根节点自定义 class
   dialogClass?: string;
   zIndex?: number;
