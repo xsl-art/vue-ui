@@ -3,14 +3,17 @@
     'is-loading': validateStatus.loading,
     'is-success': validateStatus.state === 'success',
     'is-error': validateStatus.state === 'error',
-    'is-required': isRequired
+    'is-required': isRequired,
   }">
-    <label class="vk-form-item__label">
-      <slot name="label" :label="label">{{ label }}</slot>
+    <label class="vk-form-item__label" :for="inputId" :aria-required="isRequired">
+      <slot name="label" :label="label" :input-id="inputId" :error-id="errorId">{{ label }}</slot>
     </label>
     <div class="vk-form-item__content">
       <slot :validate="validate"></slot>
-      <div class="vk-form-item__error-msg" v-if="validateStatus.state === 'error'">{{ validateStatus.errorMsg }}</div>
+      <div class="vk-form-item__error-msg" v-if="validateStatus.state === 'error'" :id="errorId" role="alert"
+        aria-live="assertive">
+        {{ validateStatus.errorMsg }}
+      </div>
     </div>
   </div>
 </template>
@@ -30,110 +33,120 @@ import { isNil } from "lodash-es";
 import Schema from "async-validator";
 
 defineOptions({
-  name: 'VkFormItem'
-})
+  name: "VkFormItem",
+});
 
 const props = defineProps<FormItemProps>();
-const formContext = inject(formContextKey)
+const formContext = inject(formContextKey);
+const inputId = `vk-form-item-${Math.random().toString(36).slice(2, 8)}-input`;
+const errorId = `vk-form-item-${Math.random().toString(36).slice(2, 8)}-error`;
 
 const validateStatus: ValidateStatusProps = reactive({
-  state: 'init',
-  errorMsg: '',
-  loading: false
-})
+  state: "init",
+  errorMsg: "",
+  loading: false,
+});
 
 let initialValue: any = null;
 
 //获取字段值
 const innerValue = computed(() => {
-  const model = formContext?.model
+  const model = formContext?.model;
   if (model && props.prop && !isNil(model[props.prop])) {
-    return model[props.prop]
+    return model[props.prop];
   } else {
-    return null
+    return null;
   }
-})
+});
 
 //获取校验规则
 const itemRules = computed(() => {
-  const rules = formContext?.rules
+  const rules = formContext?.rules;
   if (rules && props.prop && rules[props.prop]) {
-    return rules[props.prop]
+    return rules[props.prop];
   } else {
-    return []
+    return [];
   }
-})
+});
 
 //获取触发规则
 const getTriggeredRules = (trigger?: string) => {
-  const rules = itemRules.value
+  const rules = itemRules.value;
   if (rules) {
-    return rules.filter(rule => {
-      if (!rule.trigger || !trigger) return true
-      return rule.trigger && rule.trigger === trigger
-    })
+    return rules.filter((rule) => {
+      if (!rule.trigger || !trigger) return true;
+      return rule.trigger && rule.trigger === trigger;
+    });
   } else {
-    return []
+    return [];
   }
-}
-const isRequired = computed(() => { return itemRules.value?.some(rule => rule.required) })
+};
+const isRequired = computed(() => {
+  return itemRules.value?.some((rule) => rule.required);
+});
 
 //校验方法
 const validate = async (trigger?: string) => {
   //校验字段名prop(password,account)
-  const modelName = props.prop
-  const triggeredRules = getTriggeredRules(trigger)
-  if (triggeredRules.length === 0) return true
+  const modelName = props.prop;
+  const triggeredRules = getTriggeredRules(trigger);
+  if (triggeredRules.length === 0) return true;
 
   if (modelName) {
     // Schema 接收一个规则描述对象，然后返回一个实例校验器，该实例拥有 .validate() 方法
-    const validator = new Schema({ [modelName]: triggeredRules })
-    validateStatus.loading = true
-    return validator.validate({ [modelName]: innerValue.value }).then(() => {
-      validateStatus.state = 'success'
-    }).catch((e: FormValidateFailture) => {
-      const { errors } = e
-      validateStatus.state = 'error'
-      validateStatus.errorMsg = errors && errors.length > 0 ? errors[0]?.message || '' : ''
-      console.log(e.errors);
-      return Promise.reject(e)
-    }).finally(() => validateStatus.loading = false)
+    const validator = new Schema({ [modelName]: triggeredRules });
+    validateStatus.loading = true;
+    return validator
+      .validate({ [modelName]: innerValue.value })
+      .then(() => {
+        validateStatus.state = "success";
+      })
+      .catch((e: FormValidateFailture) => {
+        const { errors } = e;
+        validateStatus.state = "error";
+        validateStatus.errorMsg = errors && errors.length > 0 ? errors[0]?.message || "" : "";
+        console.log(e.errors);
+        return Promise.reject(e);
+      })
+      .finally(() => (validateStatus.loading = false));
   }
-}
+};
 
 const clearValidate = () => {
-  validateStatus.state = 'init'
-  validateStatus.errorMsg = ''
-  validateStatus.loading = false
-}
+  validateStatus.state = "init";
+  validateStatus.errorMsg = "";
+  validateStatus.loading = false;
+};
 
 const resetField = () => {
-  clearValidate()
-  const model = formContext?.model
+  clearValidate();
+  const model = formContext?.model;
   if (model && props.prop && !isNil(model[props.prop])) {
-    model[props.prop] = initialValue
+    model[props.prop] = initialValue;
   }
-}
+};
 
 const context: FormItemContext = {
   validate,
-  prop: props.prop || '',
+  prop: props.prop || "",
   clearValidate,
-  resetField
-}
+  resetField,
+  inputId,
+  errorId
+};
 
-provide(formItemContextKey, context)
+provide(formItemContextKey, context);
 
 onMounted(() => {
   if (props.prop) {
-    formContext?.addField(context)
-    initialValue = innerValue.value
+    formContext?.addField(context);
+    initialValue = innerValue.value;
   }
-})
+});
 
 onUnmounted(() => {
-  formContext?.removeField(context)
-})
+  formContext?.removeField(context);
+});
 
 //暴露实例方法共父组件通过ref调用
 defineExpose<FormItemInstance>({
