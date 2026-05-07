@@ -80,26 +80,17 @@ const isRequired = computed(() => { return itemRules.value?.some(rule => rule.re
 
 //校验方法
 const validate = async (trigger?: string) => {
-  console.log('进来了');
-
   //校验字段名prop(password,account)
   const modelName = props.prop
   const triggeredRules = getTriggeredRules(trigger)
-  console.log('这里');
-
   if (triggeredRules.length === 0) return true
-  console.log('执行这里');
 
   if (modelName) {
     // Schema 接收一个规则描述对象，然后返回一个实例校验器，该实例拥有 .validate() 方法
     const validator = new Schema({ [modelName]: triggeredRules })
     validateStatus.loading = true
     return validator.validate({ [modelName]: innerValue.value }).then(() => {
-      console.log('开始校验');
-
       validateStatus.state = 'success'
-      console.log('校验完成', validateStatus.state);
-
     }).catch((e: FormValidateFailture) => {
       const { errors } = e
       validateStatus.state = 'error'

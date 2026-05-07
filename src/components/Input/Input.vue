@@ -52,9 +52,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, ref, watch, type Ref } from 'vue';
+import { computed, inject, nextTick, ref, watch, type Ref } from 'vue';
 import Icon from '../Icon/Icon.vue';
 import type { InputEmits, InputProps } from './types';
+import { formItemContextKey } from '../Form/types';
 
 defineOptions({
   name: 'VkInput',
@@ -69,13 +70,19 @@ const props = withDefaults(defineProps<InputProps>(), {
 const emits = defineEmits<InputEmits>()
 
 const inputRef = ref() as Ref<HTMLInputElement | HTMLTextAreaElement>
-
 const isFocus = ref(false)
 const innerValue = ref(props.modelValue ?? '')
 const passwordVisible = ref(false)
 const showClear = computed(() => props.clearable && !props.disabled && !!innerValue.value && isFocus.value)
 const showPasswordArea = computed(() => props.showPassword && !props.disabled && !!innerValue.value)
 
+//校验
+const formItemContext = inject(formItemContextKey, undefined)
+const runValidate = (trigger?: string) => {
+  if (formItemContext) {
+    formItemContext?.validate(trigger).catch((e) => console.error(e.errors))
+  }
+}
 const keepFocus = async () => {
   await nextTick()
   inputRef.value!.focus()
@@ -83,11 +90,13 @@ const keepFocus = async () => {
 
 const handleChange = () => {
   emits('change', innerValue.value)
+  runValidate('change')
 }
 
 const handleInput = () => {
   emits('update:modelValue', innerValue.value)
   emits('input', innerValue.value)
+  runValidate('input')
 }
 
 const handleFocus = (event: FocusEvent) => {
@@ -98,6 +107,7 @@ const handleFocus = (event: FocusEvent) => {
 const handleBlur = (event: FocusEvent) => {
   isFocus.value = false
   emits('blur', event)
+  runValidate('blur')
 }
 
 const handleClear = () => {

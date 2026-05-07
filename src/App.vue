@@ -177,7 +177,7 @@ onMounted(() => {
         <Input type="password" v-model="model.confirmPwd" />
       </FormItem>
       <div>
-        <Button type="primary" @click.prevent="submit">Submit</Button>
+        <Button type="primary" native-type="reset" @click.prevent="submit">Submit</Button>
         <Button @click.prevent="reset">Reset</Button>
       </div>
     </Form>
