@@ -68,11 +68,17 @@
   position: absolute;
   top: 50%;
   right: 12px;
+  border: none;
+  background-color: var(--vk-alert-bg-color);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transform: translateY(-50%);
   cursor: pointer;
+
+  svg{
+   color: var(--vk-alert-text-color);
+  }
 }
 
 .vk-alert-fade {
