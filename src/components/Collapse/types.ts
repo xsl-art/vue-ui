@@ -10,7 +10,7 @@ export interface CollaseItemProps {
 
 export interface CollapseProps {
   //激活项(展开项)数组
-  modelValue: NameType[];
+  modelValue?: NameType[];
   //手风琴模式
   accordion?: boolean;
 }

@@ -21,6 +21,7 @@ import Dialog from './components/Dialog/Dialog.vue';
 
 //初始激活项
 const openedValue = ref(["a"]);
+const openedValue2 = ref([1]);
 
 const toolTipRef = ref<TooltipInstance>()
 
@@ -104,7 +105,7 @@ onMounted(() => {
   <Icon icon="poo" type="warning" color="brown" size="10x"></Icon>
 
   <br />
-  <Collapse :model-value="openedValue">
+  <Collapse :model-value="openedValue" accordion>
     <CollapseItem name="a" title="第一条">
       <div>123</div>
     </CollapseItem>
@@ -114,7 +115,23 @@ onMounted(() => {
     <CollapseItem name="c" title="第三条">
       <div>123方法骄傲了是否</div>
     </CollapseItem>
-    <CollapseItem name="d" title="第四条">
+    <CollapseItem name="d" title="第四条" disabled>
+      <div>123范德萨案件发生开发</div>
+    </CollapseItem>
+  </Collapse>
+
+  <br />
+  <Collapse :model-value="openedValue2" accordion>
+    <CollapseItem name="1" title="第一条">
+      <div>123</div>
+    </CollapseItem>
+    <CollapseItem name="2" title="第二条">
+      <div>123飞机阿拉弗拉</div>
+    </CollapseItem>
+    <CollapseItem name="3" title="第三条">
+      <div>123方法骄傲了是否</div>
+    </CollapseItem>
+    <CollapseItem name="4" title="第四条" disabled>
       <div>123范德萨案件发生开发</div>
     </CollapseItem>
   </Collapse>

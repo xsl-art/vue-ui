@@ -8,7 +8,7 @@
     </div>
     <Transition name="fade" v-on="transationEvents">
       <div class="vk-collapse-item__wrapper" v-show="isActive" :id="`item-content-${name}`" role="region"
-        :aria-labelledby="`item-content-${name}`" :aria-hidden="!isActive">
+        :aria-labelledby="`item-header-${name}`" :aria-hidden="!isActive">
         <div class="vk-collapse-item__content">
           <slot></slot>
         </div>
