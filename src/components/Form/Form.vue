@@ -60,7 +60,7 @@ const validate = async () => {
       }
     }
   }
-  if (Object.keys(validationErrors).length === 0) return
+  if (Object.keys(validationErrors).length === 0) return true
   return Promise.reject(validationErrors)
 }
 
