@@ -1,9 +1,9 @@
 export type TagType = "primary" | "info" | "success" | "warning" | "danger";
 export interface TagProps {
-  type: TagType;
+  type?: TagType;
   closable?: boolean;
-  effect: "dark" | "light" | "plain";
-  size: "large" | "small" | "mini";
+  effect?: "dark" | "light" | "plain";
+  size?: "large" | "small" | "mini";
   round?: boolean;
   disabled?: boolean;
 }
