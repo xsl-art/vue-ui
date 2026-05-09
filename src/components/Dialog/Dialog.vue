@@ -2,7 +2,7 @@
   <Teleport to="body" :disabled="!appendToBody">
     <Transition name="vk-dialog-fade" @after-enter="onOpen" @after-leave="onAfterLeave">
       <div class="vk-dialog-overlay" v-show="modelValue" :class="[modalClass, { 'is-modal': modal }]"
-        :style="overlayStyle" role="presentation" aria-hidden="true">
+        :style="overlayStyle" role="presentation">
         <div class="vk-dialog__wrapper" :class="{ 'is-align-center': alignCenter }" :style="wrapperStyle"
           @click.self="onModalClick">
           <div ref="dialogRef" class="vk-dialog" :class="[{ 'is-fullscreen': fullscreen }, dialogClass]"
@@ -69,7 +69,7 @@ const currentZIndex = ref(0);
 const bodyMounted = ref(true);
 const dialogRef = ref<HTMLElement>();
 const titleId = `vk-dialog-title-${Math.random().toString(36).slice(2, 10)}`;
-const descriptionId = `vk-dialog-desc-${Math.random().toString(36).slice(2, 10)}`
+const descriptionId = `vk-dialog-desc-${Math.random().toString(36).slice(2, 10)}`;
 const dialogOffset = ref({ x: 0, y: 0 });
 const dragging = ref(false);
 
