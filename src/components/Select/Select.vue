@@ -120,7 +120,6 @@ const findOptions = (value: string | string[]) => {
   return options ? options : [];
 };
 
-
 const toolTipRef = ref<TooltipInstance>();
 const initialOption = findOption(props.modelValue);
 const initialOptions = findOptions(props.modelValue);
