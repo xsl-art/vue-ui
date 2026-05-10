@@ -1,85 +1,70 @@
 {
-  "hash": "24c30938",
+  "hash": "3b03e4c5",
   "configHash": "b753350b",
-  "lockfileHash": "cb967f78",
-  "browserHash": "2f306d9b",
+  "lockfileHash": "cb698c54",
+  "browserHash": "2151b5ca",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.5.33_typescript@6.0.3/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "242144af",
+      "fileHash": "8216dfb4",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.7.9/node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "a208c952",
+      "fileHash": "a27940fa",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/.pnpm/@vueuse+core@12.8.2_typescript@6.0.3/node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "b315bc75",
+      "fileHash": "93ee8b6e",
       "needsInterop": false
     },
     "@fortawesome/fontawesome-svg-core": {
       "src": "../../../../node_modules/.pnpm/@fortawesome+fontawesome-svg-core@7.2.0/node_modules/@fortawesome/fontawesome-svg-core/index.mjs",
       "file": "@fortawesome_fontawesome-svg-core.js",
-      "fileHash": "4edb6144",
+      "fileHash": "1d8d7ab5",
       "needsInterop": false
     },
     "@fortawesome/free-solid-svg-icons": {
       "src": "../../../../node_modules/.pnpm/@fortawesome+free-solid-svg-icons@7.2.0/node_modules/@fortawesome/free-solid-svg-icons/index.mjs",
       "file": "@fortawesome_free-solid-svg-icons.js",
-      "fileHash": "cefba8ab",
+      "fileHash": "cb5b5058",
       "needsInterop": false
     },
     "@vitepress-demo-preview/component": {
       "src": "../../../../node_modules/.pnpm/@vitepress-demo-preview+component@2.6.2_vitepress@1.6.4+vue@3.5.33/node_modules/@vitepress-demo-preview/component/dist/preview-component.js",
       "file": "@vitepress-demo-preview_component.js",
-      "fileHash": "f43af174",
+      "fileHash": "19a2512a",
       "needsInterop": false
-    },
-    "@fortawesome/vue-fontawesome": {
-      "src": "../../../../node_modules/.pnpm/@fortawesome+vue-fontawesome@3.2.0_foubhyf54je767tv6lq2qetdv4/node_modules/@fortawesome/vue-fontawesome/index.es.js",
-      "file": "@fortawesome_vue-fontawesome.js",
-      "fileHash": "024a2de0",
-      "needsInterop": false
-    },
-    "lodash": {
-      "src": "../../../../node_modules/.pnpm/lodash@4.18.1/node_modules/lodash/lodash.js",
-      "file": "lodash.js",
-      "fileHash": "a5e0a5c9",
-      "needsInterop": true
     },
     "@popperjs/core": {
       "src": "../../../../node_modules/.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core/lib/index.js",
       "file": "@popperjs_core.js",
-      "fileHash": "29da3be9",
+      "fileHash": "072a56b2",
       "needsInterop": false
     },
     "lodash-es": {
       "src": "../../../../node_modules/.pnpm/lodash-es@4.18.1/node_modules/lodash-es/lodash.js",
       "file": "lodash-es.js",
-      "fileHash": "8bb2d692",
+      "fileHash": "24a40ecc",
       "needsInterop": false
     },
-    "async-validator": {
-      "src": "../../../../node_modules/.pnpm/async-validator@4.2.5/node_modules/async-validator/dist-web/index.js",
-      "file": "async-validator.js",
-      "fileHash": "1cae4e83",
+    "@fortawesome/vue-fontawesome": {
+      "src": "../../../../node_modules/.pnpm/@fortawesome+vue-fontawesome@3.2.0_foubhyf54je767tv6lq2qetdv4/node_modules/@fortawesome/vue-fontawesome/index.es.js",
+      "file": "@fortawesome_vue-fontawesome.js",
+      "fileHash": "6d4e0e2a",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-ZGH26PKC": {
-      "file": "chunk-ZGH26PKC.js"
-    },
     "chunk-Q5TJR7V4": {
       "file": "chunk-Q5TJR7V4.js"
     },
-    "chunk-BUSYA2B4": {
-      "file": "chunk-BUSYA2B4.js"
+    "chunk-ZGH26PKC": {
+      "file": "chunk-ZGH26PKC.js"
     }
   }
 }

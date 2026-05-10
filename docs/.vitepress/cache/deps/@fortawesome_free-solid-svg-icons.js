@@ -1,5 +1,3 @@
-import "./chunk-BUSYA2B4.js";
-
 // node_modules/.pnpm/@fortawesome+free-solid-svg-icons@7.2.0/node_modules/@fortawesome/free-solid-svg-icons/index.mjs
 var prefix = "fas";
 var fa0 = {

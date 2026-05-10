@@ -1,5 +1,3 @@
-import "./chunk-BUSYA2B4.js";
-
 // node_modules/.pnpm/lodash-es@4.18.1/node_modules/lodash-es/_freeGlobal.js
 var freeGlobal = typeof global == "object" && global && global.Object === Object && global;
 var freeGlobal_default = freeGlobal;
