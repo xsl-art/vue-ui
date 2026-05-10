@@ -20,7 +20,9 @@ defineOptions({
   name: 'VkForm'
 })
 
-const props = defineProps<FormProps>()
+const props = withDefaults(defineProps<FormProps>(), {
+  labelPosition: 'top'
+})
 
 //管理所有表单项
 const fields: FormItemContext[] = []

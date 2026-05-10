@@ -5,8 +5,11 @@ import Dropdown from "../../components/Dropdown/Dropdown.vue";
 
 const TooltipStub = defineComponent({
   name: "Tooltip",
+  props: {
+    manual: Boolean,
+  },
   emits: ["visible-change"],
-  setup(_, { slots, expose, emit }) {
+  setup(props, { slots, expose, emit }) {
     const visible = ref(false);
     const show = () => {
       visible.value = true;
@@ -20,7 +23,7 @@ const TooltipStub = defineComponent({
 
     return () =>
       h("div", { class: "tooltip-stub" }, [
-        h("div", { class: "tooltip-trigger", onclick: show }, slots.default?.()),
+        h("div", { class: "tooltip-trigger", onclick: props.manual ? undefined : show }, slots.default?.()),
         visible.value ? h("div", { class: "tooltip-content" }, slots.content?.()) : null,
       ]);
   },
@@ -124,6 +127,19 @@ describe("Dropdown", () => {
     await nextTick();
     expect(wrapper.emitted("visible-change")?.at(-1)).toEqual([false]);
     expect(wrapper.find(".tooltip-content").exists()).toBe(false);
+  });
+
+  it("supports manual mode", async () => {
+    const wrapper = mountDropdown({ menuOptions, manual: true });
+
+    await wrapper.find(".tooltip-trigger").trigger("click");
+    expect(wrapper.find(".tooltip-content").exists()).toBe(false);
+    expect(wrapper.emitted("visible-change")).toBeFalsy();
+
+    wrapper.vm.show();
+    await nextTick();
+    expect(wrapper.find(".tooltip-content").exists()).toBe(true);
+    expect(wrapper.emitted("visible-change")?.at(-1)).toEqual([true]);
   });
 
   it("renders empty menu without items", async () => {

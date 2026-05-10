@@ -2,7 +2,7 @@
   <div class="vk-dropdown" tabindex="0" @keydown.enter.prevent="toggleByKeyboard"
     @keydown.esc.prevent="toggleByKeyboard">
     <Tooltip ref="toolTipRef" :trigger="trigger" :placement="placement" :popper-options="popperOptions"
-      :open-delay="openDelay" :close-delay="closeDelay" @visible-change="visibleChange">
+      :open-delay="openDelay" :close-delay="closeDelay" :manual="manual" @visible-change="visibleChange">
       <slot></slot>
       <template #content>
         <ul class="vk-dropdown__menu" role="menu" :id="menuId">

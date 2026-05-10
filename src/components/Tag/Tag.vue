@@ -46,9 +46,17 @@ const isVisible = ref(true);
 const handleClick = (e?: Event) => {
   if (e) e.stopPropagation();
   if (props.disabled) return;
+  close();
+};
+
+const close = () => {
   isVisible.value = false;
   emits("close");
 };
+
+defineExpose({
+  close,
+});
 </script>
 
 <script lang="ts">

@@ -146,14 +146,14 @@ onMounted(() => {
 
   <br />
 
-  <Tooltip ref="toolTipRef">
+  <Tooltip ref="toolTipRef" manual>
     <img src="../src/assets/vue.svg" alt="" class="logo" width="125" height="125">
     <template #content>
       <span>你好啊tooltip</span>
     </template>
   </Tooltip>
 
-  <Dropdown trigger="hover" placement="right" :menu-options="menu">
+  <Dropdown trigger="click" placement="right" :menu-options="menu" manual>
     <img src="../src/assets/vue.svg" alt="" class="logo" width="125" height="125">
     <template #content>
     </template>
@@ -207,7 +207,7 @@ onMounted(() => {
 
   <br />
   <Button type="success" @click="visible = true">点击弹出对话框</Button>
-  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal draggable>
+  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal fullscreen>
     <p>正文内容</p>
     <Form :model="model" :rules="rules" ref="formRef">
       <FormItem label="邮箱" prop="email">

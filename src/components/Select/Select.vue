@@ -64,7 +64,7 @@ import type { SelectEmits, SelectProps, SelectOption, SelectState } from "./type
 import RenderVNode from "../../commen/RenderVNode";
 import type { TooltipInstance } from "../Tooltip/types";
 import type { InputInstance } from "../Input/types";
-import { debounce, isFunction } from "lodash";
+import { debounce, isFunction } from "lodash-es";
 import Tag from "../Tag/Tag.vue";
 
 defineOptions({

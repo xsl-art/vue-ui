@@ -162,7 +162,9 @@ const onEsc = (e: Event) => {
   handleClose();
 };
 
-useEventListener(document, "keydown", onEsc);
+if (typeof document !== "undefined") {
+  useEventListener(document, "keydown", onEsc);
+}
 
 watch(
   () => props.modelValue,

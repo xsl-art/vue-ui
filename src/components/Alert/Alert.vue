@@ -40,8 +40,10 @@ import Icon from '../Icon/Icon.vue';
 import Dialog from '../Dialog/Dialog.vue';
 import Button from '../Button/Button.vue';
 
+
 defineOptions({
-  name: 'VkIcon'
+  name: 'VkIcon',
+  inheritAttrs: false
 })
 
 const props = withDefaults(defineProps<AlertProps>(), {
@@ -49,7 +51,7 @@ const props = withDefaults(defineProps<AlertProps>(), {
   center: false,
   title: '',
   content: '',
-  icon: true,
+  icon: false,
   closable: true
 })
 
