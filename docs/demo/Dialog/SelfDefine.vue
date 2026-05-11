@@ -51,12 +51,7 @@ const rules: FormRules = {
 const formRef = ref<FormInstance>();
 
 const submit = async () => {
-  try {
-    await formRef.value?.validate();
-    console.log("passed");
-  } catch (e) {
-    console.log("the error", e);
-  }
+  await formRef.value?.validate();
 };
 const reset = () => {
   formRef.value?.resetFields();

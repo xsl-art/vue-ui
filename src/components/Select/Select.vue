@@ -66,6 +66,7 @@ import type { TooltipInstance } from "../Tooltip/types";
 import type { InputInstance } from "../Input/types";
 import { debounce, isFunction } from "lodash-es";
 import Tag from "../Tag/Tag.vue";
+import type { Modifier, Options } from "@popperjs/core";
 
 defineOptions({
   name: "VkSelect",
@@ -79,7 +80,23 @@ const props = withDefaults(defineProps<SelectProps>(), {
 
 const emits = defineEmits<SelectEmits>();
 
-const popperOptions: any = {
+const sameWidthModifier: Modifier<"sameWidth", Record<string, never>> = {
+  name: "sameWidth",
+  enabled: true,
+  fn: ({ state }) => {
+    state.styles.popper.width = `${state.rects.reference.width}px`;
+  },
+  phase: "beforeWrite",
+  requires: ["computeStyles"],
+  effect: ({ state }) => {
+    const reference = state.elements.reference;
+    if (reference instanceof HTMLElement) {
+      state.elements.popper.style.width = `${reference.offsetWidth}px`;
+    }
+  },
+};
+
+const popperOptions: Partial<Options> = {
   modifiers: [
     {
       //下拉框与输入框距离
@@ -88,21 +105,7 @@ const popperOptions: any = {
         offset: [0, 4],
       },
     },
-    {
-      //自定义等宽
-      name: "sameWidth",
-      enabled: true,
-      fn: ({ state }: { state: any }) => {
-        state.styles.popper.width = `${state.rects.reference.width}px`;
-      },
-      //指定这个函数在 Popper 将样式写入 DOM 之前执行
-      phase: "beforeWrite",
-      //必须确保 computeStyles 这个内置修饰器已经运行过，计算出了基础的位置和样式
-      requires: ["computeStyles"],
-      effect: ({ state }: { state: any }) => {
-        state.elements.popper.style.width = `${state.elements.reference.offsetWidth}px`;
-      },
-    },
+    sameWidthModifier,
   ],
 };
 

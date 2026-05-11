@@ -37,15 +37,13 @@ const emits = defineEmits<TooltipEmits>();
 const tooltipId = `vk-tooltip-${Math.random().toString(36).slice(2, 8)}`;
 
 const isOpen = ref(false);
-const outerEvents: Record<string, any> = reactive({});
-const events: Record<string, any> = reactive({});
-const popperEvents: Record<string, any> = reactive({});
+const outerEvents: Record<string, () => void> = reactive({});
+const events: Record<string, () => void> = reactive({});
+const popperEvents: Record<string, () => void> = reactive({});
 const popperContainerNode = ref<HTMLElement>();
 const triggrtNode = ref<HTMLElement>();
 const popperNode = ref<HTMLElement>();
 let popperInstance: null | Instance = null;
-let openTimes = 0;
-let closeTimes = 0;
 
 //自定义配置
 const popperOptions = computed(() => {
@@ -69,14 +67,12 @@ const popperOptions = computed(() => {
 
 //显示
 const open = () => {
-  openTimes++;
   isOpen.value = true;
   emits("visible-change", true);
 };
 
 //隐藏
 const close = () => {
-  closeTimes++;
   isOpen.value = false;
   emits("visible-change", false);
 };

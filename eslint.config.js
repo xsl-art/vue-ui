@@ -12,11 +12,13 @@ export default tseslint.config(
       "node_modules/**",
       "coverage/**",
       "public/**",
-      "docs/.vitepress/cache/**",
-      "docs/.vitepress/dist/**",
+      ".vitepress/**",
+      "docs/.vitepress/**",
+      "**/.vitepress/**",
       "**/*.md",
       "**/*.min.*",
       "package-lock.json",
+      "pnpm-lock.yaml",
     ],
   },
   eslint.configs.recommended, //JS/TS 基础最佳实践
@@ -54,7 +56,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ["tests/**/*.ts"],
+    files: ["src/tests/**/*.ts", "tests/**/*.ts"],
     plugins: { vitest },
     rules: {
       ...vitest.configs.recommended.rules,
@@ -62,6 +64,9 @@ export default tseslint.config(
       "vue/no-reserved-component-names": "off",
       //允许在一个文件中定义多个组件
       "vue/one-component-per-file": "off",
+      "vue/require-default-prop": "off",
+      "vue/prop-name-casing": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     },
     languageOptions: {
       globals: {
@@ -70,6 +75,18 @@ export default tseslint.config(
     },
   },
   eslintConfigPrettier,
+  {
+    files: ["docs/demo/**/*.{vue,ts}"],
+    rules: {
+      "no-console": "off",
+    },
+  },
+  {
+    files: ["src/commen/RenderVNode.ts"],
+    rules: {
+      "vue/prop-name-casing": "off",
+    },
+  },
   {
     rules: {
       // 组件库中常见单词组件名：Alert、Message、Dialog 等
@@ -87,7 +104,7 @@ export default tseslint.config(
   },
   /* 必须放在全局 rules 之后，否则会被 @typescript-eslint/no-explicit-any 再次打开 */
   {
-    files: ["src/vite-env.d.ts"],
+    files: ["src/vite-env.d.ts", "docs/vite-env.d.ts", "shims-vue.d.ts"],
     rules: {
       //关闭空对象类型和 any 的检查
       "@typescript-eslint/no-empty-object-type": "off",

@@ -48,17 +48,20 @@ const cssStyle = computed(() => ({
 }));
 
 //hover上去清除定时器，离开重新计时
-let timer: any = null;
+let timer: ReturnType<typeof window.setTimeout> | null = null;
 function startTimer() {
   if (props.duration === 0) return;
   if (timer) clearTimer();
-  timer = setTimeout(() => {
+  timer = window.setTimeout(() => {
     visible.value = false;
   }, props.duration);
 }
 
 function clearTimer() {
-  clearTimeout(timer);
+  if (timer) {
+    window.clearTimeout(timer);
+    timer = null;
+  }
 }
 
 onMounted(async () => {

@@ -1,10 +1,9 @@
 import type { App } from "vue";
 import Input from "./Input.vue";
-import Icon from "../Icon/Icon.vue";
 
 Input.install = (app: App) => {
-  app.component(Icon.name!, Icon);
+  app.component(Input.name!, Input);
 };
 
-export default Icon;
+export default Input;
 export * from "./types";

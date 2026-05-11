@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, h } from "vue";
 import Select from "@/components/Select/Select.vue";
+import type { SelectOption } from "@/components/Select";
 
 const test = ref("");
 const options2 = [
@@ -10,7 +11,7 @@ const options2 = [
   { label: "123", value: "4", disabled: true },
 ];
 
-const customRender = (option: any) => {
+const customRender = (option: SelectOption) => {
   return h("div", { className: "xyz" }, [h("b", option.label), h("span", option.value)]);
 };
 </script>

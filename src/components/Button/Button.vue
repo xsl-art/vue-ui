@@ -27,7 +27,7 @@ defineOptions({
 })
 
 const buttonRef = ref<ButtonInstance>()
-const props = withDefaults(defineProps<ButtonProps>(), {
+withDefaults(defineProps<ButtonProps>(), {
   nativeType: 'button'
 })
 

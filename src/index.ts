@@ -63,6 +63,20 @@ export {
   Tag,
 };
 
+export type * from "./components/Alert";
+export type * from "./components/Button";
+export type * from "./components/Collapse";
+export type * from "./components/Dialog";
+export type * from "./components/Dropdown";
+export type * from "./components/Form";
+export type * from "./components/Icon";
+export type * from "./components/Input";
+export type * from "./components/Message";
+export type * from "./components/Select";
+export type * from "./components/Switch";
+export type * from "./components/Tag";
+export type * from "./components/Tooltip";
+
 //全局导入使用插件
 export default {
   install,

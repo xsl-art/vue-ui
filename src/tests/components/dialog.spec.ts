@@ -4,16 +4,6 @@ import { defineComponent, nextTick } from "vue";
 import Dialog from "../../components/Dialog/Dialog.vue";
 import { unlockBodyScroll } from "../../components/Dialog/scrollLock";
 
-/* 标题、内容、footer、可访问性属性渲染
-自定义 header 插槽
-关闭按钮、遮罩点击、Escape 关闭行为
-showClose、closeOnClickModal、modal
-open / opened / closed 事件
-lockScroll 滚动锁定与释放
-destroyOnClose
-fullscreen / alignCenter 布局样式
-暴露的 open / close 方法
-draggable 拖拽行为及关闭按钮不触发拖拽 */
 const TransitionStub = defineComponent({
   name: "Transition",
   emits: ["after-enter", "after-leave"],

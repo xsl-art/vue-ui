@@ -21,7 +21,7 @@ const rules: FormRules = {
   confirmPwd: [
     { type: "string", required: true, trigger: "blur" },
     {
-      validator: (value: any) => value === model.password,
+      validator: (value) => value === model.password,
       trigger: "blur",
       message: "两个密码必须相同",
     },
@@ -29,12 +29,7 @@ const rules: FormRules = {
 };
 
 const submit = async () => {
-  try {
-    await formRef.value.validate();
-    console.log("passed");
-  } catch (e) {
-    console.log("the error", e);
-  }
+  await formRef.value.validate();
 };
 
 const reset = () => {

@@ -75,7 +75,7 @@ const states = [
   "York",
 ];
 
-const remoteFilter = (query: any): Promise<SelectOption[]> => {
+const remoteFilter = (query: string): Promise<SelectOption[]> => {
   return new Promise((resolve) => {
     if (query) {
       setTimeout(() => {

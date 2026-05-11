@@ -10,7 +10,6 @@
     background-color: rgba(0, 0, 0, 0.45);
   }
 
-  /* 无遮罩：不挡背后交互，仅对话框可点 */
   &:not(.is-modal) {
     background: transparent;
     pointer-events: none;

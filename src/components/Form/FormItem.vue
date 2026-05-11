@@ -47,7 +47,7 @@ const validateStatus: ValidateStatusProps = reactive({
   loading: false,
 });
 
-let initialValue: any = null;
+let initialValue: unknown = null;
 
 //获取字段值
 const innerValue = computed(() => {
@@ -105,7 +105,6 @@ const validate = async (trigger?: string) => {
         const { errors } = e;
         validateStatus.state = "error";
         validateStatus.errorMsg = errors && errors.length > 0 ? errors[0]?.message || "" : "";
-        console.log(e.errors);
         return Promise.reject(e);
       })
       .finally(() => (validateStatus.loading = false));

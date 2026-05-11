@@ -33,6 +33,13 @@ const FormHost = defineComponent({
   `,
 });
 
+type FormHostVm = InstanceType<typeof FormHost> & {
+  model: {
+    username: string;
+    password: string;
+  };
+};
+
 const mountForm = () => mount(FormHost, { global: { stubs: { Icon: IconStub } } });
 const getFormVm = (wrapper: ReturnType<typeof mount>) => wrapper.findComponent(Form).vm;
 
@@ -94,12 +101,12 @@ describe("Form", () => {
 
     await input.setValue("Tom");
     await input.trigger("blur");
-    expect((wrapper.vm as any).model.username).toBe("Tom");
+    expect((wrapper.vm as FormHostVm).model.username).toBe("Tom");
 
     getFormVm(wrapper).resetFields(["username"]);
     await nextTick();
 
-    expect((wrapper.vm as any).model.username).toBe("");
+    expect((wrapper.vm as FormHostVm).model.username).toBe("");
     expect(wrapper.findAll(".vk-form-item")[0].classes()).not.toContain("is-success");
   });
 

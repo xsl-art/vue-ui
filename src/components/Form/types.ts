@@ -14,7 +14,7 @@ export interface FormItemRules extends RuleItem {
 export type FormRules = Record<string, FormItemRules[]>;
 
 export interface FormProps {
-  model: Record<string, any>;
+  model: Record<string, unknown>;
   rules: FormRules;
   labelPosition?: LabelPosition;
 }
@@ -22,7 +22,7 @@ export interface FormProps {
 //表单项暴露给父组件的方法
 export interface FormItemContext {
   prop: string;
-  validate: (trigger?: string) => Promise<any>;
+  validate: (trigger?: string) => Promise<unknown>;
   resetField(): void;
   clearValidate(): void;
   inputId?: string;
@@ -47,14 +47,14 @@ export interface FormValidateFailture {
 }
 
 export interface FormInstance {
-  validate: () => Promise<any>;
+  validate: () => Promise<unknown>;
   resetFields: (props?: string[]) => void;
   clearFields: (props?: string[]) => void;
 }
 
 export interface FormItemInstance {
   validateStatus: ValidateStatusProps;
-  validate: (trigger?: string) => Promise<any>;
+  validate: (trigger?: string) => Promise<unknown>;
   resetField(): void;
   clearValidate(): void;
 }

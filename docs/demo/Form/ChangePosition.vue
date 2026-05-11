@@ -18,7 +18,7 @@ const rules: FormRules = {
   confirmPwd: [
     { type: "string", required: true, trigger: "blur" },
     {
-      validator: (value: any) => value === model.password,
+      validator: (value: unknown) => value === model.password,
       trigger: "blur",
       message: "两个密码必须相同",
     },

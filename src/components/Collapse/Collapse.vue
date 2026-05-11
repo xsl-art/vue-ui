@@ -30,7 +30,7 @@ watch(() => props.modelValue, (newVal) => {
 })
 
 const handleClick = (item: NameType) => {
-  let newActiveNames: NameType[] = []
+  let newActiveNames: NameType[]
 
   if (props.accordion) {
     newActiveNames = activeNames.value.includes(item) ? [] : [item]

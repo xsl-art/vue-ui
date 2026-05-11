@@ -42,11 +42,11 @@ import Button from '../Button/Button.vue';
 
 
 defineOptions({
-  name: 'VkIcon',
+  name: 'VkAlert',
   inheritAttrs: false
 })
 
-const props = withDefaults(defineProps<AlertProps>(), {
+withDefaults(defineProps<AlertProps>(), {
   effect: 'light',
   center: false,
   title: '',
