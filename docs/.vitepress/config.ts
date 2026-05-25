@@ -4,6 +4,7 @@ import { containerPreview, componentPreview } from "@vitepress-demo-preview/plug
 const srcDir = fileURLToPath(new URL("../../src", import.meta.url));
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: "/vue-ui/",
   title: "Vue Ui",
   description: "A Vue3 component library",
   vite: {
