@@ -6,10 +6,11 @@ let previousBodyWidth = "";
 let previousBodyOverflow = "";
 let previousBodyOverflowY = "";
 
-//锁定滚动
+//锁定滚动 再打开第二个弹窗只会增加计数，不会重复修改样式
 export function lockBodyScroll() {
   scrollLockCount++;
   if (scrollLockCount === 1) {
+    //当前页面的滚动位置
     scrollTop = window.scrollY || document.documentElement.scrollTop;
     previousBodyPosition = document.body.style.position;
     previousBodyTop = document.body.style.top;

@@ -2,7 +2,7 @@
   <div class="vk-switch" :class="{ [`vk-switch--${size}`]: size, 'is-checked': checked, 'is-disabled': disabled }"
     @click="switchClick">
     <input type="checkbox" role="switch" ref="inputRef" class="vk-switch__input" :name="name" :disabled="disabled"
-      :aria-checked="checked" :aria-disabled="disabled" :aria-label="(checked ? activeText : inactiveText)"
+      :aria-checked="checked" :aria-disabled="disabled" :aria-label="checked ? activeText : inactiveText"
       @keydown.enter="switchClick" />
     <div class="vk-switch__core">
       <div class="vk-switch__core-inner">

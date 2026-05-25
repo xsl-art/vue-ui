@@ -87,7 +87,7 @@ const sameWidthModifier: Modifier<"sameWidth", Record<string, never>> = {
     state.styles.popper.width = `${state.rects.reference.width}px`;
   },
   phase: "beforeWrite",
-  requires: ["computeStyles"],
+  requires: ["computeStyles"],//初始化 state.styles.popper 对象
   effect: ({ state }) => {
     const reference = state.elements.reference;
     if (reference instanceof HTMLElement) {

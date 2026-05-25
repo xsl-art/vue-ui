@@ -14,7 +14,7 @@ export interface FormItemRules extends RuleItem {
 export type FormRules = Record<string, FormItemRules[]>;
 
 export interface FormProps {
-  model: Record<string, unknown>;
+  model: Record<string, unknown>; //prop+字段值
   rules: FormRules;
   labelPosition?: LabelPosition;
 }

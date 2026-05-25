@@ -9,6 +9,7 @@
       <slot name="label" :label="label" :input-id="inputId" :error-id="errorId">{{ label }}</slot>
     </label>
     <div class="vk-form-item__content">
+      <!-- 把校验方法暴露给子组件 -->
       <slot :validate="validate"></slot>
       <div class="vk-form-item__error-msg" v-if="validateStatus.state === 'error'" :id="errorId" role="alert"
         aria-live="assertive">
@@ -121,6 +122,7 @@ const resetField = () => {
   clearValidate();
   const model = formContext?.model;
   if (model && props.prop && !isNil(model[props.prop])) {
+    //清除字段值
     model[props.prop] = initialValue;
   }
 };
@@ -131,7 +133,7 @@ const context: FormItemContext = {
   clearValidate,
   resetField,
   inputId,
-  errorId
+  errorId,
 };
 
 provide(formItemContextKey, context);
