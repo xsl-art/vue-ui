@@ -22,3 +22,17 @@ export interface MessageContext {
 }
 
 export type CreateMessageProps = Omit<MessageProps, "onDestory" | "zIndex" | "id">;
+
+export type MessageOptions = CreateMessageProps | string;
+
+type MessageShortcut = (options: MessageOptions) => MessageContext;
+
+export interface MessageFn {
+  (options: MessageOptions): MessageContext;
+  success: MessageShortcut;
+  warning: MessageShortcut;
+  info: MessageShortcut;
+  danger: MessageShortcut;
+  primary: MessageShortcut;
+  error: MessageShortcut;
+}

@@ -1,5 +1,11 @@
 import { h, render, shallowReactive } from "vue";
-import type { CreateMessageProps, MessageContext } from "./types";
+import type {
+  CreateMessageProps,
+  MessageContext,
+  MessageFn,
+  MessageOptions,
+  MessageType,
+} from "./types";
 import useZIndex from "../../hooks/useZIndex";
 import MessageConstructor from "./Message.vue";
 //createMessage()函数
@@ -75,3 +81,28 @@ export const closeAll = () => {
     instance.destory();
   });
 };
+
+function normalizeOptions(options: MessageOptions, type?: MessageType): CreateMessageProps {
+  if (typeof options === "string") {
+    return type ? { message: options, type } : { message: options };
+  }
+  return type ? { ...options, type } : options;
+}
+
+function messageImpl(options: MessageOptions) {
+  return createMessage(normalizeOptions(options));
+}
+
+const types: MessageType[] = ["success", "warning", "info", "danger", "primary"];
+
+const message = messageImpl as MessageFn;
+
+types.forEach((type) => {
+  message[type] = (options: MessageOptions) => {
+    return createMessage(normalizeOptions(options, type));
+  };
+});
+
+message.error = message.danger;
+
+export { message };

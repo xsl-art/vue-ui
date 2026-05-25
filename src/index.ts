@@ -11,7 +11,11 @@ import Switch from "./components/Switch/Switch.vue";
 import Tooltip from "./components/Tooltip/Tooltip.vue";
 import Button from "./components/Button/Button.vue";
 import Collapse, { CollapseItem } from "./components/Collapse";
-import Message, { createMessage, closeAll as closeMessageAll } from "./components/Message";
+import Message, {
+  createMessage,
+  closeAll as closeMessageAll,
+  message,
+} from "./components/Message";
 import Dialog from "./components/Dialog";
 import Tag from "./components/Tag";
 import "@/styles/index.scss";
@@ -58,6 +62,7 @@ export {
   CollapseItem,
   Message,
   createMessage,
+  message,
   closeMessageAll,
   Dialog,
   Tag,

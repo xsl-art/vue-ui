@@ -7,6 +7,7 @@ import {
   createMessage,
   getLastBottomOffset,
   getLastInstance,
+  message,
 } from "../../components/Message/methods";
 
 const TransitionStub = defineComponent({
@@ -160,5 +161,21 @@ describe("Message", () => {
 
     expect(first.vm.exposed!.visible.value).toBe(false);
     expect(second.vm.exposed!.visible.value).toBe(false);
+  });
+
+  it("creates typed messages via message shortcuts", async () => {
+    message.success("创建成功");
+    message.error("操作失败");
+    message.warning({ message: "请注意", duration: 0 });
+    await nextTick();
+
+    expect(document.body.textContent).toContain("创建成功");
+    expect(document.body.textContent).toContain("操作失败");
+    expect(document.body.textContent).toContain("请注意");
+
+    const messages = document.querySelectorAll(".vk-message");
+    expect(messages[0]?.classList.contains("vk-message--success")).toBe(true);
+    expect(messages[1]?.classList.contains("vk-message--danger")).toBe(true);
+    expect(messages[2]?.classList.contains("vk-message--warning")).toBe(true);
   });
 });
