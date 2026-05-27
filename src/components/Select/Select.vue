@@ -1,51 +1,115 @@
 <template>
-  <div class="vk-select" :class="{ 'is-disabled': disabled, 'is-multiple': multiple }" @click="toggleDropdown"
-    @mouseenter="states.mouseHover = true" @mouseleave="states.mouseHover = false">
-    <Tooltip placement="bottom" ref="toolTipRef" :popper-options="popperOptions" manual
-      @click-outside="controlDropdown(false)">
-      <Input v-model="states.inputValue" :disabled="disabled" :placeholder="filteredPlaceholder" ref="inputRef"
-        :readonly="!isDropdownShow || !filterable" role="combobox" :aria-activedescendant="activeDescendantId"
-        :aria-expanded="isDropdownShow" :aria-controls="listboxId" aria-haspopup="listbox"
-        :aria-autocomplete="filterable ? 'list' : 'none'" :aria-busy="states.loading" @input="debounceOnFilter"
-        @keydown="handleKeydown">
+  <div
+    class="vk-select"
+    :class="{ 'is-disabled': disabled, 'is-multiple': multiple }"
+    @click="toggleDropdown"
+    @mouseenter="states.mouseHover = true"
+    @mouseleave="states.mouseHover = false"
+  >
+    <Tooltip
+      placement="bottom"
+      ref="toolTipRef"
+      :popper-options="popperOptions"
+      manual
+      @click-outside="controlDropdown(false)"
+    >
+      <Input
+        v-model="states.inputValue"
+        :disabled="disabled"
+        :placeholder="filteredPlaceholder"
+        ref="inputRef"
+        :readonly="!isDropdownShow || !filterable"
+        role="combobox"
+        :aria-activedescendant="activeDescendantId"
+        :aria-expanded="isDropdownShow"
+        :aria-controls="listboxControlsId"
+        aria-haspopup="listbox"
+        :aria-autocomplete="filterable ? 'list' : 'none'"
+        :aria-busy="states.loading"
+        :aria-disabled="disabled"
+        @input="debounceOnFilter"
+        @keydown="handleKeydown"
+      >
         <template #prefix>
           <div class="vk-select__tags">
-            <Tag ref="tagRef" type="info" size="small" effect="light" closable :disabled="disabled"
-              v-for="option in states.selectedOptions" :key="option.value" @close="removeTag(option)"
-              :aria-label="`Remove ${option.label}`">
+            <Tag
+              ref="tagRef"
+              type="info"
+              size="small"
+              effect="light"
+              closable
+              :disabled="disabled"
+              v-for="option in states.selectedOptions"
+              :key="option.value"
+              @close="removeTag(option)"
+              :aria-label="`Remove ${option.label}`"
+            >
               {{ option.label }}
             </Tag>
           </div>
         </template>
         <template #suffix>
-          <button type="button" class="vk-input__clear" v-if="showClearIcon" @mousedown.prevent="NOOP"
-            @click.stop="handleClear" aria-label="Clear selection">
+          <button
+            type="button"
+            class="vk-input__clear"
+            v-if="showClearIcon"
+            @mousedown.prevent="NOOP"
+            @click.stop="handleClear"
+            aria-label="Clear selection"
+          >
             <Icon icon="circle-xmark" aria-hidden="true" />
           </button>
 
-          <Icon class="header-angle" v-else icon="angle-down" :class="{ 'is-active': isDropdownShow }"
-            aria-hidden="true" />
+          <Icon
+            class="header-angle"
+            v-else
+            icon="angle-down"
+            :class="{ 'is-active': isDropdownShow }"
+            aria-hidden="true"
+          />
         </template>
       </Input>
       <template #content>
         <div class="vk-select__loading" v-if="states.loading" role="status" aria-live="polite">
           <Icon icon="spinner" spin aria-hidden="true" />
         </div>
-        <div class="vk-select__nodata" v-else-if="filterable && filteredOptions.length === 0" role="status">
+        <div
+          class="vk-select__nodata"
+          v-else-if="filterable && filteredOptions.length === 0"
+          role="status"
+        >
           no match data!!!
         </div>
-        <ul class="vk-select__menu" v-else :id="listboxId" role="listbox" :aria-multiselectable="multiple">
+        <ul
+          class="vk-select__menu"
+          v-else
+          :id="listboxId"
+          role="listbox"
+          :aria-multiselectable="multiple"
+        >
           <template v-for="(item, index) in filteredOptions" :key="index">
-            <li class="vk-select__menu-item" :class="{
-              'is-disabled': item.disabled,
-              'is-selected': isOptionSelected(item),
-              'is-highlighted': states.highlightIndex === index,
-            }" :id="getOptionId(item, index)" role="option" :aria-selected="isOptionSelected(item)"
-              :aria-disabled="item.disabled" @click.stop="itemSelect(item)">
+            <li
+              class="vk-select__menu-item"
+              :class="{
+                'is-disabled': item.disabled,
+                'is-selected': isOptionSelected(item),
+                'is-highlighted': states.highlightIndex === index,
+              }"
+              :id="getOptionId(item, index)"
+              role="option"
+              :aria-selected="isOptionSelected(item)"
+              :aria-disabled="item.disabled"
+              @click.stop="itemSelect(item)"
+            >
               <span class="vk-select__menu-item-label">
                 <RenderVNode :VNode="renderLabel ? renderLabel(item) : item.label"></RenderVNode>
               </span>
-              <Icon class="vk-select__menu-item-check" icon="check" v-show="isOptionSelected(item)" aria-hidden="true">
+              <Icon
+                class="vk-select__menu-item-check"
+                icon="check"
+                v-show="isOptionSelected(item)"
+                aria-hidden="true"
+              >
               </Icon>
             </li>
           </template>
@@ -87,7 +151,7 @@ const sameWidthModifier: Modifier<"sameWidth", Record<string, never>> = {
     state.styles.popper.width = `${state.rects.reference.width}px`;
   },
   phase: "beforeWrite",
-  requires: ["computeStyles"],//初始化 state.styles.popper 对象
+  requires: ["computeStyles"], //初始化 state.styles.popper 对象
   effect: ({ state }) => {
     const reference = state.elements.reference;
     if (reference instanceof HTMLElement) {
@@ -188,10 +252,7 @@ const controlDropdown = async (show: boolean) => {
     if (props.filterable) generateFilterOptions(states.inputValue);
     toolTipRef.value?.show();
     await updateDropdownPosition();
-    const selectedIndex = filteredOptions.value.findIndex(
-      (option) => isOptionSelected(option) && !option.disabled,
-    );
-    states.highlightIndex = selectedIndex > -1 ? selectedIndex : findNextEnabledOption(-1, 1);
+    states.highlightIndex = -1;
   } else {
     toolTipRef.value?.hide();
     if (props.filterable) {
@@ -260,7 +321,15 @@ const handleKeydown = (e: KeyboardEvent) => {
       if (!isDropdownShow.value) controlDropdown(true);
       if (filteredOptions.value.length > 0) {
         const direction = e.key === "ArrowDown" ? 1 : -1;
-        states.highlightIndex = findNextEnabledOption(states.highlightIndex, direction);
+        const { highlightIndex } = states;
+        if (highlightIndex === -1) {
+          states.highlightIndex =
+            direction === 1
+              ? findNextEnabledOption(-1, 1)
+              : findNextEnabledOption(filteredOptions.value.length, -1);
+        } else {
+          states.highlightIndex = findNextEnabledOption(highlightIndex, direction);
+        }
       }
       break;
     case "Backspace":
@@ -273,7 +342,7 @@ const handleKeydown = (e: KeyboardEvent) => {
   }
 };
 
-const NOOP = () => { };
+const NOOP = () => {};
 
 const hasSelectedValue = computed(() =>
   props.multiple ? states.selectedOptions.length > 0 : !!states.selectedOption,
@@ -373,7 +442,17 @@ const findNextEnabledOption = (startIndex: number, direction: 1 | -1) => {
   return -1;
 };
 
+const listboxVisible = computed(
+  () =>
+    isDropdownShow.value &&
+    !states.loading &&
+    !(props.filterable && filteredOptions.value.length === 0),
+);
+
+const listboxControlsId = computed(() => (listboxVisible.value ? listboxId : undefined));
+
 const activeDescendantId = computed(() => {
+  if (!listboxVisible.value) return undefined;
   const index = states.highlightIndex;
   if (index < 0) return undefined;
   const option = filteredOptions.value[index];
