@@ -32,7 +32,10 @@ const addField: FormContext['addField'] = (field) => fields.push(field)
 
 //表单卸载时移除
 const removeField: FormContext['removeField'] = (field) => {
-  if (field.prop) fields.splice(fields.indexOf(field), 1)
+  if (!field.prop) return
+  const idx = fields.indexOf(field)
+  if (idx === -1) return
+  fields.splice(idx, 1)
 }
 
 //重置字段 不传参则重置所有
