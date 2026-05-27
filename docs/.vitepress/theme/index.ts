@@ -1,12 +1,12 @@
 import DefaultTheme from "vitepress/theme";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import "../../../src/icons";
+import "../../icons";
+// @ts-ignore: SCSS side-effect import may not have module declarations in TS
 import "../../../src/styles/index.scss";
 import { ElementPlusContainer } from "@vitepress-demo-preview/component";
+// @ts-ignore: CSS side-effect import may not have module declarations in TS
 import "@vitepress-demo-preview/component/dist/style.css";
 import type { App } from "vue";
-
-library.add(fas);
 export default {
   ...DefaultTheme,
   enhanceApp({ app }: { app: App }) {

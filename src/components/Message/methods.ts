@@ -6,14 +6,13 @@ import type {
   MessageOptions,
   MessageType,
 } from "./types";
-import useZIndex from "../../hooks/useZIndex";
+import { nextZIndex } from "@/hooks/useZIndex";
 import MessageConstructor from "./Message.vue";
 //createMessage()函数
 let seed = 1;
 const instances: MessageContext[] = shallowReactive([]);
 export const createMessage = (props: CreateMessageProps) => {
   //生成唯一id和zIndex
-  const { nextZIndex } = useZIndex();
   const id = `message_${seed++}`;
   //创建临时容器
   const container = document.createElement("div");

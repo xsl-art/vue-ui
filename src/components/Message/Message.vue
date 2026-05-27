@@ -19,10 +19,10 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref } from "vue";
 import type { MessageProps } from "./types";
-import RenderVNode from "../../commen/RenderVNode";
+import RenderVNode from "@/commen/RenderVNode";
 import Icon from "../Icon/Icon.vue";
 import { getLastBottomOffset } from "./methods";
-import useEventListener from "../../hooks/useEventListener";
+import useEventListener from "@/hooks/useEventListener";
 defineOptions({
   name: "VkMessage",
 });

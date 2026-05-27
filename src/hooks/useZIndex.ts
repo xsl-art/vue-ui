@@ -1,19 +1,14 @@
-import { computed, ref } from "vue";
+const DEFAULT_Z_INDEX_BASE = 2000;
 
-const zIndex = ref(0);
+let zIndexSeed = 0;
 
-const useZIndex = (initialValue = 2000) => {
-  const initialZIndex = ref(initialValue);
-  const currentZIndex = computed(() => zIndex.value + initialValue);
-  const nextZIndex = () => {
-    zIndex.value++;
-    return currentZIndex.value;
-  };
-  return {
-    currentZIndex,
-    nextZIndex,
-    initialZIndex,
-  };
-};
+export function nextZIndex(base = DEFAULT_Z_INDEX_BASE): number {
+  zIndexSeed += 1;
+  return zIndexSeed + base;
+}
+
+const useZIndex = (base = DEFAULT_Z_INDEX_BASE) => ({
+  nextZIndex: () => nextZIndex(base),
+});
 
 export default useZIndex;

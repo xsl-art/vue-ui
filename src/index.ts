@@ -1,6 +1,5 @@
 import type { App } from "vue";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import "./icons";
 import Alert from "./components/Alert/Alert.vue";
 import Dropdown from "./components/Dropdown/Dropdown.vue";
 import Form, { FormItem } from "./components/Form";
@@ -19,8 +18,6 @@ import Message, {
 import Dialog from "./components/Dialog";
 import Tag from "./components/Tag";
 import "@/styles/index.scss";
-
-library.add(fas);
 
 const components = [
   Alert,
@@ -45,6 +42,8 @@ const install = (app: App) => {
     app.component(component.name!, component);
   });
 };
+
+export { libraryIcons, registerLibraryIcons } from "./icons";
 
 export {
   install,

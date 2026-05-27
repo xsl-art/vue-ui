@@ -72,7 +72,7 @@ const typeIconMap: Record<string, string> = {
   primary: "tag",
   success: "circle-check",
   warning: "circle-exclamation",
-  danger: "heart",
+  danger: "ban",
   info: "circle-info",
 };
 

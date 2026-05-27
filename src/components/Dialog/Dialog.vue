@@ -36,8 +36,8 @@ import { computed, onBeforeUnmount, ref, watch } from "vue";
 import type { CSSProperties } from "vue";
 import Icon from "../Icon/Icon.vue";
 import type { DialogEmits, DialogProps } from "./types";
-import useZIndex from "../../hooks/useZIndex";
-import useEventListener from "../../hooks/useEventListener";
+import { nextZIndex } from "@/hooks/useZIndex.ts";
+import useEventListener from "@/hooks/useEventListener";
 import { lockBodyScroll, unlockBodyScroll } from "./scrollLock";
 
 defineOptions({
@@ -64,7 +64,6 @@ const props = withDefaults(defineProps<DialogProps>(), {
 
 const emit = defineEmits<DialogEmits>();
 
-const { nextZIndex } = useZIndex(2000);
 const currentZIndex = ref(0);
 const bodyMounted = ref(true);
 const dialogRef = ref<HTMLElement>();
@@ -171,7 +170,7 @@ watch(
   (newVal) => {
     if (newVal) {
       if (props.zIndex == null) {
-        currentZIndex.value = nextZIndex();
+        currentZIndex.value = nextZIndex(2000);
       }
       bodyMounted.value = true;
       if (props.lockScroll) {
