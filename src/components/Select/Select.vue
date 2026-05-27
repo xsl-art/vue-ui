@@ -204,14 +204,17 @@ const controlDropdown = async (show: boolean) => {
   emits("visible-change", show);
 };
 
+let currentRequestId = 0
 //过滤
 const generateFilterOptions = async (searchVlaue: string) => {
   if (!props.filterable) return;
   if (props.filterMethod && isFunction(props.filterMethod)) {
     filteredOptions.value = props.filterMethod(searchVlaue);
   } else if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
+    const requestId = ++currentRequestId
     states.loading = true;
     try {
+      if (requestId !== currentRequestId) return
       filteredOptions.value = await props.remoteMethod(searchVlaue);
     } catch (e) {
       console.error(e);
