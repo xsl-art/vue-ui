@@ -13,6 +13,12 @@ description: Message 组件的文档
 
 <preview path="../demo/Message/Base.vue" title="Message基础使用" description="设置内容和类型"></preview>
 
+## 调用对应类型方法使用
+
+通过调用 **message.success()** **message.error()**等方法，传入要传达的**content**信息即可动态创建message提示。
+
+<preview path="../demo/Message/Methods.vue" title="Message类型方法使用" description="类型调用"></preview>
+
 ## 可关闭
 
 设置 **showClose** 后会展示关闭按钮，用户可以手动关闭消息。
@@ -21,7 +27,7 @@ description: Message 组件的文档
 ## 自动关闭
 
 通过 **duration** 设置自动关闭时间，单位毫秒。设置为 **0** 时不会自动关闭。
-<preview path="../demo/Message/NotClose.vue" title="Message基础使用" description="不自动关闭"></preview>
+<preview path="../demo/Message/AutoClose.vue" title="Message基础使用" description="不自动关闭"></preview>
 
 ## 关闭所有消息
 

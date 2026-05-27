@@ -8,11 +8,11 @@ import Button from '@/components/Button'
 import { createMessage } from '@/components/Message/methods'
 
 const open1 = () => {
-  createMessage({ message: '小提示', type: 'info', closable: true })
+  createMessage({ message: '小提示', type: 'info', duration: 0, closable: true })
 }
 
 const open2 = () => {
-  createMessage({ message: "危险物品请勿触碰!!!", type: "danger", duration: 3000, closable: true })
+  createMessage({ message: "危险物品请勿触碰!!!", type: "danger", duration: 0, closable: true })
 }
 
 </script>

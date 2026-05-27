@@ -8,7 +8,7 @@ import Button from '@/components/Button'
 import { createMessage } from '@/components/Message/methods'
 
 const open1 = () => {
-  createMessage({ message: '小提示', type: 'info', duration: 0, closable: true })
+  createMessage({ message: '小提示', type: 'info', duration: 2000, closable: true })
 }
 
 const open2 = () => {
