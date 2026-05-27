@@ -1,6 +1,6 @@
 <template>
   <Button type="primary" @click="visible = true">点击弹出对话框</Button>
-  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal>
+  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal draggable>
     <p>请输入个人邮箱和密码</p>
     <Form :model="model" :rules="rules" ref="formRef">
       <FormItem label="邮箱" prop="email">
@@ -15,6 +15,24 @@
     </Form>
     <template #footer>
       <Button type="primary" native-type="reset" @click.prevent="submit">Submit</Button>
+      <Button type="danger" @click="open">Error</Button>
+      <Button @click.prevent="reset">Reset</Button>
+      <Button type="info" @click="show = true">点击弹出对话框</Button>
+    </template>
+  </Dialog>
+  <Dialog v-model="show" title="提示" width="500px" @close="() => { }" @closed="() => { }" modal draggable>
+    <p>请输入个人邮箱和密码</p>
+    <Form :model="model" :rules="rules" ref="formRef">
+      <FormItem label="邮箱" prop="email">
+        <Input v-model="model.email" />
+      </FormItem>
+      <FormItem label="密码" prop="password">
+        <Input type="password" v-model="model.password" />
+      </FormItem>
+    </Form>
+    <template #footer>
+      <Button type="primary" native-type="reset" @click.prevent="submit">Submit</Button>
+      <Button type="danger" @click="open">Error</Button>
       <Button @click.prevent="reset">Reset</Button>
     </template>
   </Dialog>
@@ -28,7 +46,9 @@ import Form from '@/components/Form/Form.vue'
 import FormItem from '@/components/Form/FormItem.vue'
 import Input from '@/components/Input/Input.vue';
 import { reactive, ref } from 'vue'
+import { createMessage } from '@/index';
 const visible = ref(false);
+const show = ref(false)
 const model = reactive({
   email: "",
   password: "",
@@ -56,4 +76,6 @@ const submit = async () => {
 const reset = () => {
   formRef.value?.resetFields();
 };
+
+const open = () => createMessage({ message: '失败警告', closable: true, type: 'danger' })
 </script>
