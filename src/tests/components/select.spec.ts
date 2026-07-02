@@ -124,12 +124,15 @@ describe("Select", () => {
 
     await input.trigger("keydown", { key: "ArrowDown" });
     await nextTick();
+    await waitDebounce();
     expect(wrapper.find(".vk-select__menu-item.is-highlighted").text()).toContain("Apple");
 
     await input.trigger("keydown", { key: "ArrowDown" });
+    await nextTick();
     expect(wrapper.find(".vk-select__menu-item.is-highlighted").text()).toContain("Banana");
 
     await input.trigger("keydown", { key: "Enter" });
+    await nextTick();
     expect(wrapper.emitted("update:modelValue")?.at(-1)).toEqual(["banana"]);
   });
 

@@ -7,7 +7,7 @@
         :readonly="!isDropdownShow || !filterable" role="combobox" :aria-activedescendant="activeDescendantId"
         :aria-expanded="isDropdownShow" :aria-controls="listboxControlsId" aria-haspopup="listbox"
         :aria-autocomplete="filterable ? 'list' : 'none'" :aria-busy="states.loading" :aria-disabled="disabled"
-        @input="debounceOnFilter" @keydown="handleKeydown">
+        :aria-multiline="false" @input="debounceOnFilter" @keydown="handleKeydown">
         <template #prefix>
           <div class="vk-select__tags">
             <Tag ref="tagRef" type="info" size="small" effect="light" closable :disabled="disabled"
@@ -188,7 +188,6 @@ const controlDropdown = async (show: boolean) => {
     if (props.filterable) generateFilterOptions(states.inputValue);
     toolTipRef.value?.show();
     await updateDropdownPosition();
-    states.highlightIndex = -1;
   } else {
     toolTipRef.value?.hide();
     if (props.filterable) {
@@ -204,17 +203,17 @@ const controlDropdown = async (show: boolean) => {
   emits("visible-change", show);
 };
 
-let currentRequestId = 0
+let currentRequestId = 0;
 //过滤
 const generateFilterOptions = async (searchVlaue: string) => {
   if (!props.filterable) return;
   if (props.filterMethod && isFunction(props.filterMethod)) {
     filteredOptions.value = props.filterMethod(searchVlaue);
   } else if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
-    const requestId = ++currentRequestId
+    const requestId = ++currentRequestId;
     states.loading = true;
     try {
-      if (requestId !== currentRequestId) return
+      if (requestId !== currentRequestId) return;
       filteredOptions.value = await props.remoteMethod(searchVlaue);
     } catch (e) {
       console.error(e);
@@ -223,7 +222,7 @@ const generateFilterOptions = async (searchVlaue: string) => {
       states.loading = false;
     }
   } else {
-    filteredOptions.value = props.options.filter((Option) => Option.label.includes(searchVlaue));
+    filteredOptions.value = props.options.filter((option) => option.label.includes(searchVlaue));
   }
   states.highlightIndex = -1;
 };
@@ -240,11 +239,11 @@ const filteredPlaceholder = computed(() => {
   return props.placeholder;
 });
 
-const handleKeydown = (e: KeyboardEvent) => {
+const handleKeydown = async (e: KeyboardEvent) => {
   switch (e.key) {
     case "Enter":
       if (!isDropdownShow.value) {
-        controlDropdown(true);
+        await controlDropdown(true);
       } else if (states.highlightIndex > -1 && filteredOptions.value[states.highlightIndex]) {
         itemSelect(filteredOptions.value[states.highlightIndex]);
       } else {
@@ -257,7 +256,7 @@ const handleKeydown = (e: KeyboardEvent) => {
     case "ArrowUp":
     case "ArrowDown":
       e.preventDefault();
-      if (!isDropdownShow.value) controlDropdown(true);
+      if (!isDropdownShow.value) await controlDropdown(true);
       if (filteredOptions.value.length > 0) {
         const direction = e.key === "ArrowDown" ? 1 : -1;
         const { highlightIndex } = states;

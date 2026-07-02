@@ -5,7 +5,7 @@
       [`vk-alert--${effect}`]: effect,
       'is-closable': closable,
       'is-center': center,
-      'is-showIcon': icon
+      'is-showIcon': icon,
     }" role="alert" v-if="visible" :aria-labelledby="titleId" :aria-describedby="contentId">
       <div class="vk-alert__icon" v-if="icon && type && typeIconMap[type]">
         <Icon :icon="typeIconMap[type!]" class="icon" aria-hidden="true" />
@@ -34,33 +34,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { AlertProps, AlertEmits, AlertInstance } from './types';
-import Icon from '../Icon/Icon.vue';
-import Dialog from '../Dialog/Dialog.vue';
-import Button from '../Button/Button.vue';
-
+import { ref } from "vue";
+import type { AlertProps, AlertEmits, AlertInstance } from "./types";
+import Icon from "../Icon/Icon.vue";
+import Dialog from "../Dialog/Dialog.vue";
+import Button from "../Button/Button.vue";
 
 defineOptions({
-  name: 'VkAlert',
-  inheritAttrs: false
-})
+  name: "VkAlert",
+  inheritAttrs: false,
+});
 
 withDefaults(defineProps<AlertProps>(), {
-  effect: 'light',
+  effect: "light",
   center: false,
-  title: '',
-  content: '',
+  title: "",
+  content: "",
   icon: false,
-  closable: true
-})
+  closable: true,
+});
 
-const emits = defineEmits<AlertEmits>()
+const emits = defineEmits<AlertEmits>();
 
-const alertRef = ref<AlertInstance>()
+const alertRef = ref<AlertInstance>();
 
-const visible = ref(true)
-const isOpened = ref(false)
+const visible = ref(true);
+const isOpened = ref(false);
 
 //语义化
 const instanceId = Math.random().toString(36).slice(2, 8);
@@ -77,22 +76,22 @@ const typeIconMap: Record<string, string> = {
 };
 
 const handleClick = (e?: Event) => {
-  if (e) e.stopPropagation()
-  isOpened.value = true
-}
+  if (e) e.stopPropagation();
+  isOpened.value = true;
+};
 
 const cancel = () => {
-  visible.value = true
-  isOpened.value = false
-}
+  visible.value = true;
+  isOpened.value = false;
+};
 
 const confirm = () => {
-  visible.value = false
-  isOpened.value = false
-  emits('close')
-}
+  visible.value = false;
+  isOpened.value = false;
+  emits("close");
+};
 
 defineExpose({
-  ref: alertRef
-})
+  ref: alertRef,
+});
 </script>

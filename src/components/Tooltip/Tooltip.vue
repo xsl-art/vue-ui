@@ -4,7 +4,8 @@
       <slot></slot>
     </div>
     <Transition name="fade">
-      <div class="vk-tooltip__popper" v-if="isOpen" ref="popperNode" v-on="popperEvents" role="tooltip" :id="tooltipId">
+      <div class="vk-tooltip__popper" v-show="isOpen" ref="popperNode" v-on="popperEvents" role="tooltip"
+        :id="tooltipId">
         <slot name="content">{{ content }}</slot>
         <div id="arrow" data-popper-arrow></div>
       </div>
@@ -77,8 +78,18 @@ const close = () => {
   emits("visible-change", false);
 };
 
-const openDebounce = debounce(open, props.openDelay);
-const closeDebounce = debounce(close, props.closeDelay);
+let openDebounce = debounce(open, props.openDelay, { leading: false, trailing: true });
+let closeDebounce = debounce(close, props.closeDelay, { leading: false, trailing: true });
+
+watch(
+  () => [props.openDelay, props.closeDelay] as const,
+  ([openDelay, closeDelay]) => {
+    openDebounce.cancel();
+    closeDebounce.cancel();
+    openDebounce = debounce(open, openDelay, { leading: false, trailing: true });
+    closeDebounce = debounce(close, closeDelay, { leading: false, trailing: true });
+  },
+);
 
 //互斥取消
 const openFinal = () => {
@@ -93,9 +104,9 @@ const closeFinal = () => {
 
 //判断是否点击外部
 useClickOutside(popperContainerNode, () => {
-  if (props.trigger === 'click' && isOpen.value) {
-    if (!props.manual) closeFinal()
-    emits('click-outside', true)
+  if (props.trigger === "click" && isOpen.value) {
+    if (!props.manual) closeFinal();
+    emits("click-outside", true);
   }
 });
 
@@ -147,23 +158,25 @@ watch(
 );
 
 //popper.js实例创建
-watch(() => isOpen.value, (newVal) => {
-  if (newVal) {
-    if (triggrtNode.value && popperNode.value) {
-      popperInstance = createPopper(triggrtNode.value, popperNode.value, popperOptions.value)
-    } else {
-      popperInstance?.destroy()
+watch(
+  () => isOpen.value,
+  (newVal) => {
+    if (newVal) {
+      if (triggrtNode.value && popperNode.value) {
+        popperInstance = createPopper(triggrtNode.value, popperNode.value, popperOptions.value);
+      } else {
+        popperInstance?.destroy();
+      }
     }
-  }
-}, { flush: 'post' })
+  },
+  { flush: "post" },
+);
 
-
-const update = () => popperInstance?.update()
-
+const update = () => popperInstance?.update();
 
 defineExpose({
-  show: openFinal,
-  hide: closeFinal,
-  update
-})
+  show: () => (props.manual ? open() : openFinal()),
+  hide: () => (props.manual ? close() : closeFinal()),
+  update,
+});
 </script>
