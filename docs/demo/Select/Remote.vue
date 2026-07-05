@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import Select from "@/components/Select/Select.vue";
+import VkSelect from "@/components/Select/Select.vue";
 import type { SelectOption } from "@/components/Select";
 const test = ref("");
 const states = [
@@ -96,6 +96,6 @@ const remoteFilter = (query: string): Promise<SelectOption[]> => {
 </script>
 
 <template>
-  <Select v-model="test" placeholder="搜索远程结果" filterable remote :remoteMethod="remoteFilter">
-  </Select>
+  <VkSelect v-model="test" placeholder="搜索远程结果" filterable remote :remoteMethod="remoteFilter">
+  </VkSelect>
 </template>

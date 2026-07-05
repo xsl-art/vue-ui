@@ -1,18 +1,18 @@
 <template>
   <div class="dropdown-box">
-    <Dropdown trigger="click" :menu-options="options">
+    <VkDropdown trigger="click" :menu-options="options">
       <img src="@/assets/vue.svg" alt="logo" class="logo" width="50" height="50" />
-    </Dropdown>
+    </VkDropdown>
 
-    <Dropdown trigger="hover" :menu-options="options" placement="top">
+    <VkDropdown trigger="hover" :menu-options="options" placement="top">
       <img src="@/assets/vue.svg" alt="logo" class="logo" width="50" height="50" />
-    </Dropdown>
+    </VkDropdown>
   </div>
 </template>
 
 <script setup lang="ts">
 import { h } from 'vue';
-import Dropdown from '@/components/Dropdown/Dropdown.vue'
+import VkDropdown from '@/components/Dropdown/Dropdown.vue'
 import { type MenuOption } from '@/components/Dropdown/types';
 
 //定义选项菜单

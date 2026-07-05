@@ -1,16 +1,34 @@
 <template>
-  <div class="vk-dropdown" tabindex="0" @keydown.enter.prevent="toggleByKeyboard"
-    @keydown.esc.prevent="toggleByKeyboard">
-    <Tooltip ref="toolTipRef" :trigger="trigger" :placement="placement" :popper-options="popperOptions"
-      :open-delay="openDelay" :close-delay="closeDelay" :manual="manual" @visible-change="visibleChange">
+  <div
+    class="vk-dropdown"
+    tabindex="0"
+    @keydown.enter.prevent="toggleByKeyboard"
+    @keydown.esc.prevent="toggleByKeyboard"
+  >
+    <Tooltip
+      ref="toolTipRef"
+      :trigger="trigger"
+      :placement="placement"
+      :popper-options="popperOptions"
+      :open-delay="openDelay"
+      :close-delay="closeDelay"
+      :manual="manual"
+      @visible-change="visibleChange"
+    >
       <slot></slot>
       <template #content>
         <ul class="vk-dropdown__menu" role="menu" :id="menuId">
           <template v-for="item in menuOptions" :key="item.key">
             <li class="divided-placeholder" v-if="item.divided"></li>
-            <li class="vk-dropdown__item" :class="{ 'is-disabled': item.disabled, 'is-divided': item.divided }"
-              :id="`dropdown-item-${item.key}`" role="menuitem" tabindex="-1" :aria-disabled="item.disabled"
-              @click="() => itemClick(item)">
+            <li
+              class="vk-dropdown__item"
+              :class="{ 'is-disabled': item.disabled, 'is-divided': item.divided }"
+              :id="`dropdown-item-${item.key}`"
+              role="menuitem"
+              tabindex="-1"
+              :aria-disabled="item.disabled"
+              @click="() => itemClick(item)"
+            >
               <RenderVNode :VNode="item.label"></RenderVNode>
             </li>
           </template>

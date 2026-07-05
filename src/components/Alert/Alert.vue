@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import type { AlertProps, AlertEmits, AlertInstance } from "./types";
+import type { AlertProps, AlertEmits, AlertInstance, AlertType } from "./types";
 import Icon from "../Icon/Icon.vue";
 import Dialog from "../Dialog/Dialog.vue";
 import Button from "../Button/Button.vue";
@@ -67,7 +67,7 @@ const titleId = `alert-title-${instanceId}`;
 const contentId = `alert-content-${instanceId}`;
 
 //图标映射
-const typeIconMap: Record<string, string> = {
+const typeIconMap: Record<AlertType, string> = {
   primary: "tag",
   success: "circle-check",
   warning: "circle-exclamation",

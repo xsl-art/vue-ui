@@ -1,14 +1,17 @@
 <template>
-  <div class="vk-input" :class="{
-    [`vk-input--${type}`]: type,
-    [`vk-input--${size}`]: size,
-    'is-disabled': disabled,
-    'is-prepend': $slots.prepend,
-    'is-prefix': $slots.prefix,
-    'is-suffix': $slots.suffix,
-    'is-append': $slots.append,
-    'is-focus': isFocus,
-  }">
+  <div
+    class="vk-input"
+    :class="{
+      [`vk-input--${type}`]: type,
+      [`vk-input--${size}`]: size,
+      'is-disabled': disabled,
+      'is-prepend': $slots.prepend,
+      'is-prefix': $slots.prefix,
+      'is-suffix': $slots.suffix,
+      'is-append': $slots.append,
+      'is-focus': isFocus,
+    }"
+  >
     <!-- input -->
     <template v-if="type !== 'textarea'">
       <!-- prepend slot -->
@@ -20,21 +23,51 @@
         <span class="vk-input__prefix" v-if="$slots.prefix">
           <slot name="prefix"></slot>
         </span>
-        <input class="vk-input__inner" ref="inputRef" :id="inputIdFromFormItem"
-          :type="showPassword ? (passwordVisible ? 'text' : 'password') : type" v-bind="$attrs" :disabled="disabled"
-          :readonly="readonly" :autocomplete="autocomplete" :placeholder="placeholder" :autofocus="autofocus"
-          :form="form" v-model="innerValue" @change="handleChange" @input="handleInput" @blur="handleBlur"
-          @focus="handleFocus" />
+        <input
+          class="vk-input__inner"
+          ref="inputRef"
+          :id="inputIdFromFormItem"
+          :type="showPassword ? (passwordVisible ? 'text' : 'password') : type"
+          v-bind="$attrs"
+          :disabled="disabled"
+          :readonly="readonly"
+          :autocomplete="autocomplete"
+          :placeholder="placeholder"
+          :autofocus="autofocus"
+          :form="form"
+          v-model="innerValue"
+          @change="handleChange"
+          @input="handleInput"
+          @blur="handleBlur"
+          @focus="handleFocus"
+        />
         <!-- suffix slot -->
-        <span class="vk-input__suffix" v-if="$slots.suffix || showClear || showPasswordArea" @click="keepFocus">
+        <span
+          class="vk-input__suffix"
+          v-if="$slots.suffix || showClear || showPasswordArea"
+          @click="keepFocus"
+        >
           <slot name="suffix"></slot>
-          <Icon icon="circle-xmark" v-if="showClear" @click="handleClear" @mousedown.prevent="NOOP"
-            class="vk-input__clear">
+          <Icon
+            icon="circle-xmark"
+            v-if="showClear"
+            @click="handleClear"
+            @mousedown.prevent="NOOP"
+            class="vk-input__clear"
+          >
           </Icon>
-          <Icon icon="eye" v-if="showPassword && passwordVisible" @click="togglePasswordVisible"
-            class="vk-input__password"></Icon>
-          <Icon icon="eye-slash" v-if="showPassword && !passwordVisible" @click="togglePasswordVisible"
-            class="vk-input__password"></Icon>
+          <Icon
+            icon="eye"
+            v-if="showPassword && passwordVisible"
+            @click="togglePasswordVisible"
+            class="vk-input__password"
+          ></Icon>
+          <Icon
+            icon="eye-slash"
+            v-if="showPassword && !passwordVisible"
+            @click="togglePasswordVisible"
+            class="vk-input__password"
+          ></Icon>
         </span>
       </div>
       <!-- append slot -->
@@ -44,10 +77,23 @@
     </template>
     <!-- textarea -->
     <template v-else>
-      <textarea class="vk-textarea__wrapper" v-bind="$attrs" ref="inputRef" :rows="rows" :disabled="disabled"
-        :readonly="readonly" :autocomplete="autocomplete" :placeholder="placeholder" :autofocus="autofocus" :form="form"
-        v-model="innerValue" @input="handleInput" @focus="handleFocus" @blur="handleBlur"
-        @change="handleChange"></textarea>
+      <textarea
+        class="vk-textarea__wrapper"
+        v-bind="$attrs"
+        ref="inputRef"
+        :rows="rows"
+        :disabled="disabled"
+        :readonly="readonly"
+        :autocomplete="autocomplete"
+        :placeholder="placeholder"
+        :autofocus="autofocus"
+        :form="form"
+        v-model="innerValue"
+        @input="handleInput"
+        @focus="handleFocus"
+        @blur="handleBlur"
+        @change="handleChange"
+      ></textarea>
     </template>
   </div>
 </template>
@@ -57,6 +103,7 @@ import { computed, inject, nextTick, ref, watch, type Ref } from "vue";
 import Icon from "../Icon/Icon.vue";
 import type { InputEmits, InputProps } from "./types";
 import { formItemContextKey } from "../Form/types";
+import { message } from "../Message/index.ts";
 
 defineOptions({
   name: "VkInput",
@@ -90,7 +137,7 @@ const appendId = `vk-input-append-${Math.random().toString(36).slice(2, 8)}`;
 
 const runValidate = (trigger?: string) => {
   if (formItemContext) {
-    formItemContext?.validate(trigger).catch((e) => console.error(e.errors));
+    formItemContext?.validate(trigger).catch((e) => message.error(e.errors[0].message));
   }
 };
 const keepFocus = async () => {
@@ -131,7 +178,7 @@ const togglePasswordVisible = () => {
   passwordVisible.value = !passwordVisible.value;
 };
 
-const NOOP = () => { };
+const NOOP = () => {};
 
 watch(
   () => props.modelValue,

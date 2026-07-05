@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import Icon from "@/components/Icon/Icon.vue";
+import VkIcon from "@/components/Icon/Icon.vue";
 </script>
 
 <template>
   <div class="icon-demo-row">
-    <Icon icon="check" type="primary" />
-    <Icon icon="circle-check" type="success" />
-    <Icon icon="circle-info" type="info" />
-    <Icon icon="triangle-exclamation" type="warning" />
-    <Icon icon="circle-xmark" type="danger" />
+    <VkIcon icon="check" type="primary" />
+    <VkIcon icon="circle-check" type="success" />
+    <VkIcon icon="circle-info" type="info" />
+    <VkIcon icon="triangle-exclamation" type="warning" />
+    <VkIcon icon="circle-xmark" type="danger" />
   </div>
 </template>
 

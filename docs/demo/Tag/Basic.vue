@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import Tag from "@/components/Tag/Tag.vue";
+import VkTag from "@/components/Tag/Tag.vue";
 </script>
 
 <template>
   <div class="tag-demo-row">
-    <Tag>Primary</Tag>
-    <Tag type="success">Success</Tag>
-    <Tag type="info">Info</Tag>
-    <Tag type="warning">Warning</Tag>
-    <Tag type="danger">Danger</Tag>
+    <VkTag>Primary</VkTag>
+    <VkTag type="success">Success</VkTag>
+    <VkTag type="info">Info</VkTag>
+    <VkTag type="warning">Warning</VkTag>
+    <VkTag type="danger">Danger</VkTag>
   </div>
 </template>
 

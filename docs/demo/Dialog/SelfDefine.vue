@@ -1,50 +1,50 @@
 <template>
-  <Button type="primary" @click="visible = true">点击弹出对话框</Button>
-  <Dialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal draggable>
+  <VkButton type="primary" @click="visible = true">点击弹出对话框</VkButton>
+  <VkDialog v-model="visible" title="提示" width="480px" @close="() => { }" @closed="() => { }" modal draggable>
     <p>请输入个人邮箱和密码</p>
-    <Form :model="model" :rules="rules" ref="formRef">
-      <FormItem label="邮箱" prop="email">
-        <Input v-model="model.email" />
-      </FormItem>
-      <FormItem label="密码" prop="password">
-        <Input type="password" v-model="model.password" />
-      </FormItem>
-      <FormItem label="confirmPwd" prop="confirmPwd">
-        <Input type="password" v-model="model.confirmPwd" />
-      </FormItem>
-    </Form>
+    <VkForm :model="model" :rules="rules" ref="formRef">
+      <VkFormItem label="邮箱" prop="email">
+        <VkInput v-model="model.email" />
+      </VkFormItem>
+      <VkFormItem label="密码" prop="password">
+        <VkInput type="password" v-model="model.password" />
+      </VkFormItem>
+      <VkFormItem label="confirmPwd" prop="confirmPwd">
+        <VkInput type="password" v-model="model.confirmPwd" />
+      </VkFormItem>
+    </VkForm>
     <template #footer>
-      <Button type="primary" native-type="reset" @click.prevent="submit">Submit</Button>
-      <Button type="danger" @click="open">Error</Button>
-      <Button @click.prevent="reset">Reset</Button>
-      <Button type="info" @click="show = true">点击弹出对话框</Button>
+      <VkButton type="primary" native-type="reset" @click.prevent="submit">Submit</VkButton>
+      <VkButton type="danger" @click="open">Error</VkButton>
+      <VkButton @click.prevent="reset">Reset</VkButton>
+      <VkButton type="info" @click="show = true">点击弹出对话框</VkButton>
     </template>
-  </Dialog>
-  <Dialog v-model="show" title="提示" width="500px" @close="() => { }" @closed="() => { }" modal draggable>
+  </VkDialog>
+  <VkDialog v-model="show" title="提示" width="500px" @close="() => { }" @closed="() => { }" modal draggable>
     <p>请输入个人邮箱和密码</p>
-    <Form :model="model" :rules="rules" ref="formRef">
-      <FormItem label="邮箱" prop="email">
-        <Input v-model="model.email" />
-      </FormItem>
-      <FormItem label="密码" prop="password">
-        <Input type="password" v-model="model.password" />
-      </FormItem>
-    </Form>
+    <VkForm :model="model" :rules="rules" ref="formRef">
+      <VkFormItem label="邮箱" prop="email">
+        <VkInput v-model="model.email" />
+      </VkFormItem>
+      <VkFormItem label="密码" prop="password">
+        <VkInput type="password" v-model="model.password" />
+      </VkFormItem>
+    </VkForm>
     <template #footer>
-      <Button type="primary" native-type="reset" @click.prevent="submit">Submit</Button>
-      <Button type="danger" @click="open">Error</Button>
-      <Button @click.prevent="reset">Reset</Button>
+      <VkButton type="primary" native-type="reset" @click.prevent="submit">Submit</VkButton>
+      <VkButton type="danger" @click="open">Error</VkButton>
+      <VkButton @click.prevent="reset">Reset</VkButton>
     </template>
-  </Dialog>
+  </VkDialog>
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/Button/Button.vue'
-import Dialog from '@/components/Dialog/Dialog.vue'
+import VkButton from '@/components/Button/Button.vue'
+import VkDialog from '@/components/Dialog/Dialog.vue'
 import type { FormInstance, FormRules } from '@/components/Form/types';
-import Form from '@/components/Form/Form.vue'
-import FormItem from '@/components/Form/FormItem.vue'
-import Input from '@/components/Input/Input.vue';
+import VkForm from '@/components/Form/Form.vue'
+import VkFormItem from '@/components/Form/FormItem.vue'
+import VkInput from '@/components/Input/Input.vue';
 import { reactive, ref } from 'vue'
 import { createMessage } from '@/index';
 const visible = ref(false);

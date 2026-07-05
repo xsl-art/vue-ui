@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, h } from "vue";
-import Select from "@/components/Select/Select.vue";
+import VkSelect from "@/components/Select/Select.vue";
 import type { SelectOption } from "@/components/Select";
 
 const test = ref("");
@@ -17,7 +17,7 @@ const customRender = (option: SelectOption) => {
 </script>
 
 <template>
-  <Select
+  <VkSelect
     v-model="test"
     placeholder="基础选择器，请选择"
     :options="options2"

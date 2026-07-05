@@ -14,16 +14,97 @@
       "import": "./dist/es/index.mjs",
       "require": "./dist/umd/index.umd.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/style.css",
+    "./es/components/*/style.css": "./dist/es/components/*/style.css",
+    "./es/components/*": {
+      "types": "./dist/types/components/*/index.d.ts",
+      "import": "./dist/es/components/*/index.mjs"
+    },
+    "./alert": {
+      "types": "./dist/types/components/Alert/index.d.ts",
+      "import": "./dist/es/components/Alert/index.mjs"
+    },
+    "./alert/style.css": "./dist/es/components/Alert/style.css",
+    "./button": {
+      "types": "./dist/types/components/Button/index.d.ts",
+      "import": "./dist/es/components/Button/index.mjs"
+    },
+    "./button/style.css": "./dist/es/components/Button/style.css",
+    "./collapse": {
+      "types": "./dist/types/components/Collapse/index.d.ts",
+      "import": "./dist/es/components/Collapse/index.mjs"
+    },
+    "./collapse/style.css": "./dist/es/components/Collapse/style.css",
+    "./dialog": {
+      "types": "./dist/types/components/Dialog/index.d.ts",
+      "import": "./dist/es/components/Dialog/index.mjs"
+    },
+    "./dialog/style.css": "./dist/es/components/Dialog/style.css",
+    "./dropdown": {
+      "types": "./dist/types/components/Dropdown/index.d.ts",
+      "import": "./dist/es/components/Dropdown/index.mjs"
+    },
+    "./dropdown/style.css": "./dist/es/components/Dropdown/style.css",
+    "./form": {
+      "types": "./dist/types/components/Form/index.d.ts",
+      "import": "./dist/es/components/Form/index.mjs"
+    },
+    "./form/style.css": "./dist/es/components/Form/style.css",
+    "./icon": {
+      "types": "./dist/types/components/Icon/index.d.ts",
+      "import": "./dist/es/components/Icon/index.mjs"
+    },
+    "./icon/style.css": "./dist/es/components/Icon/style.css",
+    "./input": {
+      "types": "./dist/types/components/Input/index.d.ts",
+      "import": "./dist/es/components/Input/index.mjs"
+    },
+    "./input/style.css": "./dist/es/components/Input/style.css",
+    "./message": {
+      "types": "./dist/types/components/Message/index.d.ts",
+      "import": "./dist/es/components/Message/index.mjs"
+    },
+    "./message/style.css": "./dist/es/components/Message/style.css",
+    "./select": {
+      "types": "./dist/types/components/Select/index.d.ts",
+      "import": "./dist/es/components/Select/index.mjs"
+    },
+    "./select/style.css": "./dist/es/components/Select/style.css",
+    "./switch": {
+      "types": "./dist/types/components/Switch/index.d.ts",
+      "import": "./dist/es/components/Switch/index.mjs"
+    },
+    "./switch/style.css": "./dist/es/components/Switch/style.css",
+    "./tag": {
+      "types": "./dist/types/components/Tag/index.d.ts",
+      "import": "./dist/es/components/Tag/index.mjs"
+    },
+    "./tag/style.css": "./dist/es/components/Tag/style.css",
+    "./tooltip": {
+      "types": "./dist/types/components/Tooltip/index.d.ts",
+      "import": "./dist/es/components/Tooltip/index.mjs"
+    },
+    "./tooltip/style.css": "./dist/es/components/Tooltip/style.css",
+    "./resolver": {
+      "types": "./dist/types/resolver/index.d.ts",
+      "import": "./dist/es/resolver/index.mjs"
+    },
+    "./package.json": "./package.json"
   },
+  "sideEffects": [
+    "dist/**/*.css",
+    "dist/**/*.scss",
+    "dist/umd/*.js"
+  ],
   "files": [
     "dist"
   ],
   "scripts": {
     "dev": "vite",
-    "build": "pnpm build:lib && pnpm build:types",
+    "build": "pnpm build:lib && pnpm build:types && pnpm build:components",
     "build:lib": "vite build",
     "build:types": "vue-tsc -p tsconfig.build.json",
+    "build:components": "node scripts/build-components.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

@@ -1,12 +1,12 @@
 <template>
-  <Tooltip placement="right">
+  <VkTooltip placement="right">
     <img src="@/assets/vue.svg" alt="logo" class="logo" width="50" height="50" />
     <template #content>
       <h1>hello toolTip!</h1>
     </template>
-  </Tooltip>
+  </VkTooltip>
 </template>
 
 <script setup lang="ts">
-import Tooltip from '../../../src/components/Tooltip/Tooltip.vue'
+import VkTooltip from '../../../src/components/Tooltip/Tooltip.vue'
 </script>

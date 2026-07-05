@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import Form from "@/components/Form/Form.vue";
-import FormItem from "@/components/Form/FormItem.vue";
-import Input from "@/components/Input/Input.vue";
-import Button from "@/components/Button/Button.vue";
+import VkForm from "@/components/Form/Form.vue";
+import VkFormItem from "@/components/Form/FormItem.vue";
+import VkInput from "@/components/Input/Input.vue";
+import VkButton from "@/components/Button/Button.vue";
 import type { FormRules, LabelPosition } from '@/components/Form/types'
 import { reactive, ref } from "vue";
 
@@ -44,19 +44,19 @@ const changeTop = () => {
 
 <template>
   <div class="form-box">
-    <Form :model="model" :rules="rules" ref="formRef" :label-position="positon">
-      <FormItem label="the email" prop="email">
-        <Input v-model="model.email" />
-      </FormItem>
-      <FormItem label="the password" prop="password">
-        <Input type="password" v-model="model.password" />
-      </FormItem>
-      <FormItem label="confirmPwd" prop="confirmPwd">
-        <Input type="password" v-model="model.confirmPwd" />
-      </FormItem>
-    </Form>
-    <Button type="primary" @click="changeLeft">Left</Button>
-    <Button type="success" @click="changeRight">Right</Button>
-    <Button type="warning" @click="changeTop">Top</Button>
+    <VkForm :model="model" :rules="rules" ref="formRef" :label-position="positon">
+      <VkFormItem label="the email" prop="email">
+        <VkInput v-model="model.email" />
+      </VkFormItem>
+      <VkFormItem label="the password" prop="password">
+        <VkInput type="password" v-model="model.password" />
+      </VkFormItem>
+      <VkFormItem label="confirmPwd" prop="confirmPwd">
+        <VkInput type="password" v-model="model.confirmPwd" />
+      </VkFormItem>
+    </VkForm>
+    <VkButton type="primary" @click="changeLeft">Left</VkButton>
+    <VkButton type="success" @click="changeRight">Right</VkButton>
+    <VkButton type="warning" @click="changeTop">Top</VkButton>
   </div>
 </template>

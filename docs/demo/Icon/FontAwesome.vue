@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import Icon from "@/components/Icon/Icon.vue";
+import VkIcon from "@/components/Icon/Icon.vue";
 </script>
 
 <template>
   <div class="icon-demo-row">
-    <Icon icon="spinner" spin size="2x" />
-    <Icon icon="rotate" spin-pulse size="2x" />
-    <Icon icon="bell" shake size="2x" />
-    <Icon icon="heart" beat size="2x" />
+    <VkIcon icon="spinner" spin size="2x" />
+    <VkIcon icon="rotate" spin-pulse size="2x" />
+    <VkIcon icon="bell" shake size="2x" />
+    <VkIcon icon="heart" beat size="2x" />
   </div>
 </template>
 

@@ -79,10 +79,11 @@ pnpm build
 
 构建后会生成：
 
-- `dist/es`：ES Module 产物
+- `dist/es`：ES Module 全量产物
+- `dist/es/components`：各组件独立 ES 产物与样式
 - `dist/umd`：UMD 产物
 - `dist/types`：TypeScript 类型声明
-- `dist/style.css`：组件库样式文件
+- `dist/style.css`：组件库全量样式文件
 
 ### 本地基础测试和验证
 
@@ -94,7 +95,7 @@ pnpm install
 pnpm add ../my-vue-ui/my-vue-ui-0.1.0.tgz
 ```
 
-引入样式和在main.ts文件中进行注册使用，并验证全局注册和按需导入是否正常。
+引入样式和在 main.ts 文件中进行注册使用，并验证全局注册和按需导入是否正常。
 
 ## 使用方式
 
@@ -111,15 +112,34 @@ createApp(App).use(VueUi).mount("#app");
 
 ### 按需引入
 
-```ts
-import { Button, Input } from "vue-ui";
-import "vue-ui/style.css";
+> 注意：`import { Button } from "vue-ui"` 会解析全量入口 `dist/es/index.mjs`，无法按需打包，不推荐这样使用。
+
+推荐通过 `unplugin-vue-components` + `VueUiResolver` 实现自动按需引入，无需手动 import 组件和样式：
+
+```bash
+pnpm add -D unplugin-vue-components
 ```
+
+```ts
+// vite.config.ts
+import Components from "unplugin-vue-components/vite";
+import { VueUiResolver } from "vue-ui/resolver";
+
+export default {
+  plugins: [
+    Components({
+      resolvers: [VueUiResolver()],
+    }),
+  ],
+};
+```
+
+模板中直接使用带 `Vk` 前缀的组件标签即可：
 
 ```vue
 <template>
-  <Button type="primary">确认</Button>
-  <Input v-model="value" placeholder="请输入内容" />
+  <VkButton type="primary">确认</VkButton>
+  <VkInput v-model="value" placeholder="请输入内容" />
 </template>
 ```
 
@@ -140,7 +160,7 @@ import "vue-ui/style.css";
 
 - 学习 Vue 3 组件库设计与封装
 - 了解组件库打包、类型声明和文档站搭建流程
-- 作为个人项目或中后台项目的基础 UI 组件库
+- 作为个人项目或中后台项目的基础 UI 库
 - 在业务项目中二次封装和扩展通用组件
 
 ## 项目定位

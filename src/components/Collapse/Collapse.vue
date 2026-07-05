@@ -7,6 +7,7 @@
 <script setup lang="ts">
 import { provide, ref, watch } from 'vue';
 import { type CollapseProps, type NameType, type CollapseEmits, collapseContextKey } from './types';
+import { message } from '../Message';
 
 defineOptions({
   name: 'VkCollapse'
@@ -22,7 +23,7 @@ const emits = defineEmits<CollapseEmits>()
 const activeNames = ref<NameType[]>([...props.modelValue])
 
 if (props.accordion && activeNames.value.length > 1) {
-  console.warn("accordion mode should only have one active item");
+  message.error("accordion mode should only have one active item");
 }
 
 watch(() => props.modelValue, (newVal) => {

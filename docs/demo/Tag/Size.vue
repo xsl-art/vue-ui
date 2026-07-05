@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Tag from "@/components/Tag/Tag.vue";
+import VkTag from "@/components/Tag/Tag.vue";
 </script>
 
 <template>
   <div class="tag-demo-row">
-    <Tag size="large">Large</Tag>
-    <Tag>Small</Tag>
-    <Tag size="mini">Mini</Tag>
+    <VkTag size="large">Large</VkTag>
+    <VkTag>Small</VkTag>
+    <VkTag size="mini">Mini</VkTag>
   </div>
 </template>
 

@@ -34,7 +34,11 @@ export const libraryIcons = [
   faBan,
 ] satisfies IconDefinition[];
 
+let isRegistered = false;
+
 export function registerLibraryIcons(additional: IconDefinition[] = []) {
+  if (isRegistered) return;
+  isRegistered = true;
   library.add(...libraryIcons, ...additional);
 }
 

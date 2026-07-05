@@ -4,7 +4,7 @@
 
 ## 快速开始
 
-`Vue-Ui` 是一个基于 **Vue 3 + TypeScript** 开发的轻量级组件库，支持全局注册和按需引入两种使用方式。组件样式已统一打包为独立 CSS 文件，使用组件前需要在入口文件中引入样式。
+`Vue-Ui` 是一个基于 **Vue 3 + TypeScript** 开发的轻量级组件库，支持全局注册和按需引入两种使用方式。
 
 ## 环境要求
 
@@ -62,8 +62,8 @@ createApp(App).use(VueUi).mount("#app");
 
 ```vue
 <template>
-  <Button type="primary">主要按钮</Button>
-  <Input v-model="keyword" placeholder="请输入内容" />
+  <VkButton type="primary">主要按钮</VkButton>
+  <VkInput v-model="keyword" placeholder="请输入内容" />
 </template>
 
 <script setup lang="ts">
@@ -73,20 +73,43 @@ const keyword = ref("");
 </script>
 ```
 
-## 按需引入(半成品，未做样式分离)
+## 按需引入
 
-如果只使用部分组件，可以按需导入指定组件。按需引入有利于减少业务代码中无关组件的使用成本。
+> 注意：`import { Button } from "vue-ui"` 会解析全量入口 `dist/es/index.mjs`，无法按需打包，不推荐这样使用。
+
+推荐通过 `unplugin-vue-components` + `VueUiResolver` 实现自动按需引入。
+
+安装插件：
+
+```bash
+pnpm add -D unplugin-vue-components
+```
+
+在 `vite.config.ts` 中配置 resolver：
+
+```ts
+import Components from "unplugin-vue-components/vite";
+import { VueUiResolver } from "vue-ui/resolver";
+
+export default {
+  plugins: [
+    Components({
+      resolvers: [VueUiResolver()],
+    }),
+  ],
+};
+```
+
+配置完成后，模板中直接使用带 `Vk` 前缀的组件标签即可：
 
 ```vue
 <template>
-  <Button type="primary" @click="handleClick">提交</Button>
-  <Switch v-model="enabled" />
+  <VkButton type="primary" @click="handleClick">提交</VkButton>
+  <VkSwitch v-model="enabled" />
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { Button, Switch } from "vue-ui";
-import "vue-ui/style.css";
 
 const enabled = ref(false);
 
@@ -96,11 +119,9 @@ const handleClick = () => {
 </script>
 ```
 
-> 当前样式为统一样式入口，按需引入组件时仍建议引入 `vue-ui/style.css`。
-
 ## 在 Vite 项目中使用
 
-以下是一个完整的 Vite + Vue 3 项目入口示例：
+以下是一个完整的 Vite + Vue 3 项目入口示例（全局注册方式）：
 
 ```ts
 import { createApp } from "vue";
@@ -111,23 +132,6 @@ import App from "./App.vue";
 const app = createApp(App);
 
 app.use(VueUi);
-app.mount("#app");
-```
-
-如果你希望单独注册某些组件，也可以这样写：
-
-```ts
-import { createApp } from "vue";
-import { Button, Input, Select } from "vue-ui";
-import "vue-ui/style.css";
-import App from "./App.vue";
-
-const app = createApp(App);
-
-app.component("Button", Button);
-app.component("Input", Input);
-app.component("Select", Select);
-
 app.mount("#app");
 ```
 

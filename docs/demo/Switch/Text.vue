@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from "vue";
-import Switch from "@/components/Switch/Switch.vue";
+import VkSwitch from "@/components/Switch/Switch.vue";
 
 const test = ref(false);
 </script>
 <template>
-  <Switch v-model="test" activeText="ON" inactiveText="OFF" />
+  <VkSwitch v-model="test" activeText="ON" inactiveText="OFF" />
 </template>

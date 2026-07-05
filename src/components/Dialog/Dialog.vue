@@ -1,20 +1,45 @@
 <template>
   <Teleport to="body" :disabled="!appendToBody">
     <Transition name="vk-dialog-fade" @after-enter="onOpen" @after-leave="onAfterLeave">
-      <div class="vk-dialog-overlay" v-show="modelValue" :class="[modalClass, { 'is-modal': modal }]"
-        :style="overlayStyle" role="presentation">
-        <div class="vk-dialog__wrapper" :class="{ 'is-align-center': alignCenter }" :style="wrapperStyle"
-          @click.self="onModalClick">
-          <div ref="dialogRef" class="vk-dialog" :class="[{ 'is-fullscreen': fullscreen }, dialogClass]"
-            :style="dialogStyle" role="dialog" aria-modal="true" :aria-labelledby="titleId"
-            :aria-describedby="descriptionId" tabindex="-1">
-            <div class="vk-dialog__header" :class="{ 'is-draggable': draggable && !fullscreen }"
-              @mousedown="onHeaderMouseDown">
+      <div
+        class="vk-dialog-overlay"
+        v-show="modelValue"
+        :class="[modalClass, { 'is-modal': modal }]"
+        :style="overlayStyle"
+        role="presentation"
+      >
+        <div
+          class="vk-dialog__wrapper"
+          :class="{ 'is-align-center': alignCenter }"
+          :style="wrapperStyle"
+          @click.self="onModalClick"
+        >
+          <div
+            ref="dialogRef"
+            class="vk-dialog"
+            :class="[{ 'is-fullscreen': fullscreen }, dialogClass]"
+            :style="dialogStyle"
+            role="dialog"
+            aria-modal="true"
+            :aria-labelledby="titleId"
+            :aria-describedby="descriptionId"
+            tabindex="-1"
+          >
+            <div
+              class="vk-dialog__header"
+              :class="{ 'is-draggable': draggable && !fullscreen }"
+              @mousedown="onHeaderMouseDown"
+            >
               <slot name="header">
                 <span class="vk-dialog__title" :id="titleId">{{ title }}</span>
               </slot>
-              <button v-if="showClose" type="button" class="vk-dialog__close" @click="handleClose"
-                aria-label="Close dialog">
+              <button
+                v-if="showClose"
+                type="button"
+                class="vk-dialog__close"
+                @click="handleClose"
+                aria-label="Close dialog"
+              >
                 <Icon icon="xmark" />
               </button>
             </div>

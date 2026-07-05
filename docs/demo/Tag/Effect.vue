@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import Tag from "@/components/Tag/Tag.vue";
+import VkTag from "@/components/Tag/Tag.vue";
 </script>
 
 <template>
   <div class="tag-demo-group">
     <div class="tag-demo-row">
-      <Tag type="primary" effect="light">Light</Tag>
-      <Tag type="success" effect="light">Light</Tag>
-      <Tag type="warning" effect="light">Light</Tag>
-      <Tag type="danger" effect="light">Light</Tag>
+      <VkTag type="primary" effect="light">Light</VkTag>
+      <VkTag type="success" effect="light">Light</VkTag>
+      <VkTag type="warning" effect="light">Light</VkTag>
+      <VkTag type="danger" effect="light">Light</VkTag>
     </div>
     <div class="tag-demo-row">
-      <Tag type="primary" effect="dark">Dark</Tag>
-      <Tag type="success" effect="dark">Dark</Tag>
-      <Tag type="warning" effect="dark">Dark</Tag>
-      <Tag type="danger" effect="dark">Dark</Tag>
+      <VkTag type="primary" effect="dark">Dark</VkTag>
+      <VkTag type="success" effect="dark">Dark</VkTag>
+      <VkTag type="warning" effect="dark">Dark</VkTag>
+      <VkTag type="danger" effect="dark">Dark</VkTag>
     </div>
     <div class="tag-demo-row">
-      <Tag type="primary" effect="plain">Plain</Tag>
-      <Tag type="success" effect="plain">Plain</Tag>
-      <Tag type="warning" effect="plain">Plain</Tag>
-      <Tag type="danger" effect="plain">Plain</Tag>
+      <VkTag type="primary" effect="plain">Plain</VkTag>
+      <VkTag type="success" effect="plain">Plain</VkTag>
+      <VkTag type="warning" effect="plain">Plain</VkTag>
+      <VkTag type="danger" effect="plain">Plain</VkTag>
     </div>
   </div>
 </template>

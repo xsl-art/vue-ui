@@ -48,7 +48,7 @@ const cssStyle = computed(() => ({
 }));
 
 //hover上去清除定时器，离开重新计时
-let timer: ReturnType<typeof window.setTimeout> | null = null;
+let timer: number | null = null;
 function startTimer() {
   if (props.duration === 0) return;
   if (timer) clearTimer();

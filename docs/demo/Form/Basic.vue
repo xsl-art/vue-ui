@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import Form from "@/components/Form/Form.vue";
-import FormItem from "@/components/Form/FormItem.vue";
-import Input from "@/components/Input/Input.vue";
-import Button from "@/components/Button/Button.vue";
+import VkForm from "@/components/Form/Form.vue";
+import VkFormItem from "@/components/Form/FormItem.vue";
+import VkInput from "@/components/Input/Input.vue";
+import VkButton from "@/components/Button/Button.vue";
 import { reactive, ref } from "vue";
 import type { FormRules } from "@/components/Form";
 
@@ -39,29 +39,29 @@ const reset = () => {
 
 <template>
   <div>
-    <Form :model="model" :rules="rules" ref="formRef" label-position="top">
-      <FormItem label="the email" prop="email">
-        <Input v-model="model.email" />
-      </FormItem>
-      <FormItem label="the password" prop="password">
+    <VkForm :model="model" :rules="rules" ref="formRef" label-position="top">
+      <VkFormItem label="the email" prop="email">
+        <VkInput v-model="model.email" />
+      </VkFormItem>
+      <VkFormItem label="the password" prop="password">
         <!--  <template #label="{ label }">
-          <Button>{{ label }}</Button>
+          <VkButton>{{ label }}</VkButton>
         </template> -->
-        <Input type="password" v-model="model.password" />
-      </FormItem>
-      <FormItem label="test" prop="test">
+        <VkInput type="password" v-model="model.password" />
+      </VkFormItem>
+      <VkFormItem label="test" prop="test">
         <template #default="{ validate }">
           <input class="origin-input" type="text" v-model="model.test" @blur="() => validate()" />
         </template>
-      </FormItem>
-      <FormItem label="confirmPwd" prop="confirmPwd">
-        <Input type="password" v-model="model.confirmPwd" />
-      </FormItem>
+      </VkFormItem>
+      <VkFormItem label="confirmPwd" prop="confirmPwd">
+        <VkInput type="password" v-model="model.confirmPwd" />
+      </VkFormItem>
       <div>
-        <Button type="primary" @click.prevent="submit">Submit</Button>
-        <Button @click.prevent="reset">Reset</Button>
+        <VkButton type="primary" @click.prevent="submit">Submit</VkButton>
+        <VkButton @click.prevent="reset">Reset</VkButton>
       </div>
-    </Form>
+    </VkForm>
     <div class="form-demo-value">
       <span>form value:</span>
       <pre>{{ model }}</pre>

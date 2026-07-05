@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import Tag from "@/components/Tag/Tag.vue";
+import VkTag from "@/components/Tag/Tag.vue";
 
 </script>
 
 <template>
   <div class="tag-demo-row">
-    <Tag closable>Closable</Tag>
-    <Tag type="success" closable>Success</Tag>
-    <Tag type="warning" closable round>Round</Tag>
-    <Tag type="danger" closable disabled>Disabled</Tag>
+    <VkTag closable>Closable</VkTag>
+    <VkTag type="success" closable>Success</VkTag>
+    <VkTag type="warning" closable round>Round</VkTag>
+    <VkTag type="danger" closable disabled>Disabled</VkTag>
   </div>
 </template>
 

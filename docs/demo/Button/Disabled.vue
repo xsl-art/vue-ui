@@ -1,24 +1,24 @@
 <script setup>
-import Button from "@/components/Button/Button.vue";
+import VkButton from "@/components/Button/Button.vue";
 </script>
 
 <template>
   <div class="button-row">
-    <Button disabled>default</Button>
-    <Button type="primary" disabled>Button1</Button>
-    <Button type="success" disabled>Button2</Button>
-    <Button type="info" disabled>Button3</Button>
-    <Button type="warning" disabled>Button4</Button>
-    <Button type="danger" disabled>Button5</Button>
+    <VkButton disabled>default</VkButton>
+    <VkButton type="primary" disabled>Button1</VkButton>
+    <VkButton type="success" disabled>Button2</VkButton>
+    <VkButton type="info" disabled>Button3</VkButton>
+    <VkButton type="warning" disabled>Button4</VkButton>
+    <VkButton type="danger" disabled>Button5</VkButton>
   </div>
 
   <div class="button-row">
-    <Button disabled>default</Button>
-    <Button type="primary" plain disabled>Button1</Button>
-    <Button type="success" plain disabled>Button2</Button>
-    <Button type="info" plain disabled>Button3</Button>
-    <Button type="warning" plain disabled>Button4</Button>
-    <Button type="danger" plain disabled>Button5</Button>
+    <VkButton disabled>default</VkButton>
+    <VkButton type="primary" plain disabled>Button1</VkButton>
+    <VkButton type="success" plain disabled>Button2</VkButton>
+    <VkButton type="info" plain disabled>Button3</VkButton>
+    <VkButton type="warning" plain disabled>Button4</VkButton>
+    <VkButton type="danger" plain disabled>Button5</VkButton>
   </div>
 </template>
 

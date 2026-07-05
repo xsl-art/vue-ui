@@ -1,18 +1,26 @@
 <template>
-  <div class="vk-form-item" :class="{
-    'is-loading': validateStatus.loading,
-    'is-success': validateStatus.state === 'success',
-    'is-error': validateStatus.state === 'error',
-    'is-required': isRequired,
-  }">
+  <div
+    class="vk-form-item"
+    :class="{
+      'is-loading': validateStatus.loading,
+      'is-success': validateStatus.state === 'success',
+      'is-error': validateStatus.state === 'error',
+      'is-required': isRequired,
+    }"
+  >
     <label class="vk-form-item__label" :for="inputId" :aria-required="isRequired">
       <slot name="label" :label="label" :input-id="inputId" :error-id="errorId">{{ label }}</slot>
     </label>
     <div class="vk-form-item__content">
       <!-- 把校验方法暴露给子组件 -->
       <slot :validate="validate"></slot>
-      <div class="vk-form-item__error-msg" v-if="validateStatus.state === 'error'" :id="errorId" role="alert"
-        aria-live="assertive">
+      <div
+        class="vk-form-item__error-msg"
+        v-if="validateStatus.state === 'error'"
+        :id="errorId"
+        role="alert"
+        aria-live="assertive"
+      >
         {{ validateStatus.errorMsg }}
       </div>
     </div>

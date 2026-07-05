@@ -1,13 +1,13 @@
 <script setup>
-import Button from "@/components/Button/Button.vue";
+import VkButton from "@/components/Button/Button.vue";
 </script>
 
 <template>
   <div class="button-row">
-    <Button type="primary" loading>loading...</Button>
-    <Button type="success" loading circle>loading...</Button>
-    <Button type="info" loading round>loading...</Button>
-    <Button type="warning" loading disabled>loading...</Button>
-    <Button type="danger" loading>loading...</Button>
+    <VkButton type="primary" loading>loading...</VkButton>
+    <VkButton type="success" loading circle>loading...</VkButton>
+    <VkButton type="info" loading round>loading...</VkButton>
+    <VkButton type="warning" loading disabled>loading...</VkButton>
+    <VkButton type="danger" loading>loading...</VkButton>
   </div>
 </template>

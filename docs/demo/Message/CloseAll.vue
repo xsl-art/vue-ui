@@ -1,10 +1,10 @@
 <template>
-  <Button type="primary" @click="open">show message</Button>
-  <Button type="danger" @click="close">show danger</Button>
+  <VkButton type="primary" @click="open">show message</VkButton>
+  <VkButton type="danger" @click="close">show danger</VkButton>
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/Button'
+import VkButton from '@/components/Button'
 import { closeAll, createMessage } from '@/components/Message/methods'
 
 const open = () => {

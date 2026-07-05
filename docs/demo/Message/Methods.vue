@@ -1,11 +1,11 @@
 <template>
-  <Button type="success" round @click="open1">show success</Button>
-  <Button type="danger" round @click="open2">show danger</Button>
-  <Button type="warning" round @click="open3">show warning</Button>
+  <VkButton type="success" round @click="open1">show success</VkButton>
+  <VkButton type="danger" round @click="open2">show danger</VkButton>
+  <VkButton type="warning" round @click="open3">show warning</VkButton>
 </template>
 
 <script setup lang="ts">
-import Button from '@/components/Button'
+import VkButton from '@/components/Button'
 import { message } from '@/components/Message/methods'
 
 const open1 = () => message.success('成功了!!!')

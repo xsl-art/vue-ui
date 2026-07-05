@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import Select from "@/components/Select/Select.vue";
+import VkSelect from "@/components/Select/Select.vue";
 const test = ref("");
 const options2 = [
   { label: "hello", value: "1" },
@@ -10,5 +10,5 @@ const options2 = [
 ];
 </script>
 <template>
-  <Select v-model="test" placeholder="基础选择器，请选择" :options="options2" filterable />
+  <VkSelect v-model="test" placeholder="基础选择器，请选择" :options="options2" filterable />
 </template>
