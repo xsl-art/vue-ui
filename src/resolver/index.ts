@@ -1,13 +1,5 @@
 import type { ComponentInfo, ComponentResolver } from "unplugin-vue-components";
 
-export interface VueUiResolverOptions {
-  /**
-   * 组件名前缀。默认 "Vk"，表示只解析模板中以 Vk 开头的标签，如 <VkButton />。
-   * 设置为 false 或空字符串可关闭前缀匹配，直接解析 <Button />。
-   */
-  prefix?: string | false;
-}
-
 const componentList = [
   "Alert",
   "Button",
@@ -31,18 +23,15 @@ const subComponentMap: Record<string, string> = {
   FormItem: "Form",
 };
 
-export function VueUiResolver(options: VueUiResolverOptions = {}): ComponentResolver {
-  const { prefix = "Vk" } = options;
+const PREFIX = "Vk";
 
+export function VueUiResolver(): ComponentResolver {
   return {
     type: "component",
     resolve: (name: string): ComponentInfo | undefined => {
-      let componentName = name;
+      if (!name.startsWith(PREFIX)) return;
 
-      if (prefix) {
-        if (!componentName.startsWith(prefix)) return;
-        componentName = componentName.slice(prefix.length);
-      }
+      const componentName = name.slice(PREFIX.length);
 
       if (!componentName || !(componentList as readonly string[]).includes(componentName)) {
         return;
@@ -52,7 +41,6 @@ export function VueUiResolver(options: VueUiResolverOptions = {}): ComponentReso
 
       return {
         name: "default",
-        as: componentName,
         from: `vue-ui/es/components/${dirName}`,
         sideEffects: [`vue-ui/es/components/${dirName}/style.css`],
       };

@@ -92,7 +92,7 @@ pnpm pack
 pnpm create vite test-my-vue-ui --template vue-ts
 cd test-my-vue-ui
 pnpm install
-pnpm add ../my-vue-ui/my-vue-ui-0.1.0.tgz
+pnpm add ../vue-ui/vue-ui-0.1.0.tgz
 ```
 
 引入样式和在 main.ts 文件中进行注册使用，并验证全局注册和按需导入是否正常。
